@@ -138,13 +138,6 @@ module "ad2" {
 | instance\_id | The AWS Instance id created |
 | sg\_id | The id of the security group created |
 
-#### **Code Location**
-
-Code should be stored in terraform/app/code
-
-#### **Code updates**
-
-Ensure that vars zyx are in regional/global vars
 
 ### **Issues**
 
