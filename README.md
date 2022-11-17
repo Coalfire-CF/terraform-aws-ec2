@@ -8,18 +8,20 @@ AWS EC2 general purpose module.
 
 - Terraform Version: >= 1.0
 - Cloud(s) supported: Government/Commercial
-- Product Version/License: 
+- Product Version/License: N/A
 - FedRAMP Compliance Support: General usage
 - DoD Compliance Support: General usage
 - Misc Framework Support:
 - Launchpad validated version: 2.6
 
-# **Setup and usage**
+## Setup and usage
 
-## Description
+### Description
+
 This module creates ec2, iam, and security group resources.
 
-## User Data
+### User Data
+
 ```hcl-terraform
 user_data = [
     {
@@ -37,12 +39,12 @@ user_data = [
 
 ```
 
-## Multiple ENIs
-In order to assign mulitple ENIs to a single instance using this module, the "instance_count" variable must be set to 1.
+### Multiple ENIs
 
+In order to assign multiple ENIs to a single instance using this module, the "instance_count" variable must be set to 1.
 
+### Security Groups
 
-## Security Groups
 ```hcl-terraform
 cidr_security_group_rules = [
     {
@@ -56,16 +58,20 @@ cidr_security_group_rules = [
     ...
   ]
 ```
-## IAM
+
+### IAM
+
 ```hcl-terraform
 iam_policies      = [aws_iam_policy.test_policy_1.arn, ...]
 
 ```
 
-## Multiple EBS Volumes
+### Multiple EBS Volumes
+
 The root ebs volume is handled with the below variables:
 
 However, if additional ebs volumes are required, you can use the below variable:
+
 ```hcl-terraform
 ebs_block_devices = [
     {
@@ -78,11 +84,12 @@ ebs_block_devices = [
 
 ```
 
+### Attaching Security Groups or IAM Profile from other instances
 
-## Attaching Security Groups or IAM Profile from other instances
 The module also supports attaching a security group or IAM Profile from another instance within the same directory.  Let's take an example:
 AD1 creates a security group that can be used by both AD1 and AD2.  So, the AD2 module should use the output of the AD1 module to assign the existing security group.  Note, AD2 would now have a dependency on AD1.
 As shown below, the "additional_security_groups" variable can be used for this purpose.
+
  ```hcl-terraform
 module "ad2" {
   source = "../../../../modules/aws-coalfire-ec2"
@@ -138,7 +145,6 @@ module "ad2" {
 | instance\_id | The AWS Instance id created |
 | sg\_id | The id of the security group created |
 
-
 ### **Issues**
 
 Bug fixes and enhancements are managed, tracked, and discussed through the GitHub issues on this repository.
@@ -150,27 +156,27 @@ Issues should be flagged appropriately.
 - Documentation
 - Code
 
-#### **Bugs**
+#### Bugs
 
 Bugs are problems that exist with the technology or code that occur when expected behavior does not match implementation.
 For example, spelling mistakes on a dashboard.
 
 Use the Bug fix template to describe the issue and expected behaviors.
 
-#### **Enhancements**
+#### Enhancements
 
 Updates and changes to the code to support additional functionality, new features or improve engineering or operations usage of the technology.
 For example, adding a new widget to a dashboard to report on failed backups is enhancement.
 
 Use the Enhancement issue template to request enhancements to the codebase. Enhancements should be improvements that are applicable to wide variety of clients and projects. One of updates for a specific project should be handled locally. If you are unsure if something qualifies for an enhancement contact the repository code owner.
 
-#### **Pull Requests**
+#### Pull Requests
 
 Code updates ideally are limited in scope to address one enhancement or bug fix per PR. The associated PR should be linked to the relevant issue.
 
-#### **Code Owners**
+#### Code Owners
 
-- Primary Code owner: Douglas Francis (@douglas-f)
+- Primary Code owner: Christian Stano (@cstano)
 - Backup Code owner: James Westbrook (@i-ate-a-vm)
 
 The responsibility of the code owners is to approve and Merge PR's on the repository, and generally manage and direct issue discussions.
