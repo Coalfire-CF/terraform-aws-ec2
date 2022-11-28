@@ -2,7 +2,7 @@
 locals {
     user_data = var.user_data == null ? null : [
       for script in var.user_data : templatefile(
-      "${script["path"]["directory"]}/${script["path"]["folder_name"]}/${script["path"]["file_name"]}",
+      "${path.module}/${script["path"]["folder_name"]}/${script["path"]["file_name"]}",
       script["vars"]
     )
   ]
