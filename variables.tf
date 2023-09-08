@@ -128,8 +128,8 @@ variable "egress_rules" {
   description = "The list of rules for egress traffic. Required fields for each rule are 'protocol', 'from_port', 'to_port', and at least one of 'cidr_blocks', 'ipv6_cidr_blocks', 'security_groups', 'self', or 'prefix_list_sg'. Optional fields are 'description' and those not used from the previous list"
   type = list(object({
     protocol         = string
-    from_port        = optional(string)
-    to_port          = optional(string)
+    from_port        = string
+    to_port          = string
     cidr_blocks      = optional(list(string), [])
     ipv6_cidr_blocks = optional(list(string), [])
     prefix_list_ids  = optional(list(string), [])

@@ -5,8 +5,8 @@ module "security_group" {
   description = var.sg_description
   vpc_id      = var.vpc_id
 
-  ingress_rules = var.ingress_rules
-  egress_rules  = var.egress_rules
+  ingress_rules = length(var.ingress_rules) == 0 ? null : var.ingress_rules
+  egress_rules  = length(var.egress_rules) == 0 ? null : var.egress_rules
 
   network_interface_resource_associations = var.additional_eni_ids
 }
