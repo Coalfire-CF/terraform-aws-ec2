@@ -1,13 +1,3 @@
-# Gathers user data from maps listed in module calls
-locals {
-    user_data = var.user_data == null ? null : [
-      for script in var.user_data : templatefile(
-      "${script["path"]["module_directory"]}/${script["path"]["folder_name"]}/${script["path"]["file_name"]}",
-      script["vars"]
-    )
-  ]
-}
-
 data "cloudinit_config" "user_data" {
   count         = length(var.user_data) > 0 ? 1 : 0
   gzip          = var.user_data_gzip
