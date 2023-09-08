@@ -23,3 +23,10 @@ locals {
   additional_sg_to_primary_eni    = setproduct(var.additional_security_groups, aws_instance.this.*.primary_network_interface_id)
   additional_sg_to_additional_eni = setproduct(var.additional_security_groups, var.additional_eni_ids)
 }
+
+# For additional ebs attachment
+locals {
+  additional_ebs_volumes = setproduct(aws_instance.this.*.availability_zone, var.ebs_volumes)
+  created_ebs_ids = aws_ebs_volume.this.*.id
+  created_instance_ids = aws_instance.this.*.id
+}
