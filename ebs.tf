@@ -22,11 +22,11 @@ resource "aws_ebs_volume" "this" {
 }
 
 resource "aws_volume_attachment" "this" {
-  count = length(local.additional_ebs_volumes)
+  for_each = local.additional_ebs_volumes
 
-  device_name                    = local.additional_ebs_volumes[count.index][1].device_name
-  instance_id                    = local.created_instance_ids[count.index % 2]
-  volume_id                      = local.created_ebs_ids[count.index]
+  device_name                    = each.value.device_name
+  instance_id                    = each.key.device_name
+  volume_id                      = each.value.device_name
   force_detach                   = local.additional_ebs_volumes[count.index][1].force_detach
   skip_destroy                   = local.additional_ebs_volumes[count.index][1].skip_destroy
   stop_instance_before_detaching = local.additional_ebs_volumes[count.index][1].stop_instance_before_detaching
