@@ -207,6 +207,7 @@ No modules.
 | <a name="input_simple_user_data"></a> [simple\_user\_data](#input\_simple\_user\_data) | Simple string for 1 liner user data | `string` | `""` | no |
 | <a name="input_iam_profile"></a> [iam\_profile](#input\_iam\_profile) | A variable to attach an existing iam profile to the ec2 instance(s) created | `string` | `""` | no |
 | <a name="input_iam_policies"></a> [iam\_policies](#input\_iam\_policies) | A list of the iam policy ARNs to attach to the IAM role | `list(string)` | `[]` | no |
+| <a name="input_add_SSMManagedInstanceCore"></a> [add\_SSMManagedInstanceCore](#input\_add\_SSMManagedInstanceCore) | Whether or not to apply the SSMManagedInstanceCore to the IAM role | `bool` | `true` | no |
 | <a name="input_default_iam_policy"></a> [default\_iam\_policy](#input\_default\_iam\_policy) | default iam base policy | `string` | `""` | no |
 | <a name="input_assume_role_policy"></a> [module\_assume\_role\_policy](#input\_assume\_role\_policy) | Policy document allowing Principals to assume this role (e.g. Trust Relationship) | `string` | _`[grants sts:AssumeRole to EC2]`_ | no |
 | <a name="input_module_depends_on"></a> [module\_depends\_on](#input\_module\_depends\_on) | A variable to simulate the depends on feature that resources have | `any` | `null` | no |
