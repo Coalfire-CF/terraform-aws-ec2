@@ -15,6 +15,54 @@ AWS EC2 general purpose module.
 
 ## Setup and usage
 
+This is an example of how to create an EC2 instance using this module, with generic variables.
+
+```hcl-terraform
+module "ec2_test" {
+  source = "../.."
+
+  name = var.instance_name
+
+  ami               = data.aws_ami.ami.id
+  ec2_instance_type = var.instance_size
+  instance_count    = var.instance_count
+
+  vpc_id = aws_vpc.main.id
+  subnet_ids = var.subnet_ids
+
+  ec2_key_pair    = var.key_name
+  ebs_kms_key_arn = data.terraform_remote_state.kms.outputs.ebs_kms_key_arn
+
+  # Storage
+  root_volume_size = var.instance_volume_size
+
+  # Security Group Rules
+  ingress_rules = [{
+    protocol    = "tcp"
+    from_port   = "443"
+    to_port     = "443"
+    cidr_blocks = [aws_vpc.main.cidr_block]
+    },
+    {
+      protocol    = "tcp"
+      from_port   = "22"
+      to_port     = "22"
+      cidr_blocks = [aws_vpc.main.cidr_block]
+  }]
+
+  egress_rules = [{
+    protocol    = "-1"
+    from_port   = "0"
+    to_port     = "0"
+    cidr_blocks = ["0.0.0.0/0"]
+  }]
+
+  # Tagging
+  global_tags = {}
+}
+
+```
+
 ### Description
 
 This module creates ec2, iam, and security group resources.
