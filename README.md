@@ -83,12 +83,15 @@ user_data = [
     },
     ...
   ]
-
 ```
 
 ### Multiple ENIs
 
 In order to assign multiple ENIs to a single instance using this module, the "instance_count" variable must be set to 1.
+
+```hcl-terraform
+  additional_eni_ids = [aws_network_interface.test_eni.id, ...]
+```
 
 ### <a name="section_security_group_rules"></a> [Security Group Rules](#section\_security\_group_\rules)
 
@@ -102,7 +105,6 @@ Both the `ingress_rules` and `egress_rules` input variables hold the same struct
     cidr_blocks = [aws_vpc.main.cidr_block]
     },
     {
-      # ssh
       protocol    = "tcp"
       from_port   = "22"
       to_port     = "22"
@@ -136,8 +138,7 @@ All ingress and egress variables follow the [official Terraform documentation on
 ### IAM
 
 ```hcl-terraform
-iam_policies      = [aws_iam_policy.test_policy_1.arn, ...]
-
+  iam_policies      = [aws_iam_policy.test_policy_1.arn, ...]
 ```
 
 ### Multiple EBS Volumes
@@ -147,7 +148,7 @@ The root ebs volume is handled with the below variables:
 However, if additional ebs volumes are required, you can use the below variable:
 
 ```hcl-terraform
-ebs_block_devices = [
+  ebs_block_devices = [
     {
       device_name = "/dev/sdf"
       volume_size = "50"
@@ -155,7 +156,6 @@ ebs_block_devices = [
     },
     ...
   ]
-
 ```
 
 ### Attaching Security Groups or IAM Profile from other instances
