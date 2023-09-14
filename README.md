@@ -134,28 +134,49 @@ The arguments accepted by both `ingress_rules` and `egress_rules` are also ident
 
 All ingress and egress variables follow the [official Terraform documentation on inline security group rules](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group#ingress).
 
+### <a name="section_multiple_ebs_volumes"></a> [Multiple EBS Volumes](#section\_multiple\_ebs_\volumes)
+
+The purpose of this variable is to create and attach additional EBS volumes to each created instance. When creating the list of volume objects, the code should resemble:
+
+``` HCL
+    ebs_volumes = [
+    {
+      device_name  = "/dev/sdb"
+      size         = 20
+      type         = "gp3"
+    },
+    {
+      device_name  = "/dev/sdc"
+      size         = 20
+      type         = "gp3"
+      throughput   = 800
+      force_detach = true
+    }
+  ]
+```
+The arguments accepted by `ebs_volumes` are as follows (All bool values default to `false`):
+
+| Name | Type | Required |
+|------|------|:--------:|
+| <a name="input_device_name"></a> [device_name](#input\_device\_name) | `string` | yes |
+| <a name="input_size"></a> [size](#input\_size) | `number` | yes |
+| <a name="input_type"></a> [type](#input\_type) | `string` | yes |
+| <a name="input_throughput"></a> [throughput](#input\_throughput) | `number` | no |
+| <a name="input_iops"></a> [iops](#input\_iops) | `number` | no |
+| <a name="input_multi_attach_enabled"></a> [multi_attach_enabled](#input\_multi\_attach\_enabled) | `bool` | no |
+| <a name="input_final_snapshot"></a> [final_snapshot](#input\_final\_snapshot) | `string` | no |
+| <a name="input_snapshot_id"></a> [snapshot_id](#input\_snapshot\_id) | `string` | no |
+| <a name="input_outpost_arn"></a> [outpost_arn](#input\_outpost_arn) | `string` | no |
+| <a name="input_force_detach"></a> [force_detach](#input\_force\_detach) | `bool` | no |
+| <a name="input_skip_destroy"></a> [skip_destroy](#input\_skip\_destroy) | `bool` | no |
+| <a name="input_stop_instance_before_detaching"></a> [stop_instance_before_detaching](#input\_stop\_instance\_before\_detaching) | `bool` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | `map(string)` | no |
+
 
 ### IAM
 
 ```hcl-terraform
   iam_policies      = [aws_iam_policy.test_policy_1.arn, ...]
-```
-
-### Multiple EBS Volumes
-
-The root ebs volume is handled with the below variables:
-
-However, if additional ebs volumes are required, you can use the below variable:
-
-```hcl-terraform
-  ebs_block_devices = [
-    {
-      device_name = "/dev/sdf"
-      volume_size = "50"
-      volume_type = "gp2"
-    },
-    ...
-  ]
 ```
 
 ### Attaching Security Groups or IAM Profile from other instances
@@ -189,13 +210,13 @@ module "ad2" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.15.0 < 6.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.15.0, < 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.15.0 < 6.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.15.0, < 6.0 |
 | <a name="provider_cloudinit"></a> [cloudinit](#provider\_cloudinit) | n/a |
 
 ## Modules
@@ -208,6 +229,7 @@ module "ad2" {
 
 | Name | Type |
 |------|------|
+| [aws_ebs_volume.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_volume) | resource |
 | [aws_eip.eip](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) | resource |
 | [aws_eip_association.eip_attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip_association) | resource |
 | [aws_iam_instance_profile.this_profile](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) | resource |
@@ -220,6 +242,7 @@ module "ad2" {
 | [aws_network_interface_attachment.eni_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface_attachment) | resource |
 | [aws_network_interface_sg_attachment.additional](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface_sg_attachment) | resource |
 | [aws_network_interface_sg_attachment.primary](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface_sg_attachment) | resource |
+| [aws_volume_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/volume_attachment) | resource |
 | [aws_iam_policy.AmazonSSMManagedInstanceCore](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy) | data source |
 | [cloudinit_config.user_data](https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/config) | data source |
 
@@ -234,9 +257,9 @@ module "ad2" {
 | <a name="input_associate_eip"></a> [associate\_eip](#input\_associate\_eip) | Whether or not to associate an Elastic IP | `bool` | `false` | no |
 | <a name="input_associate_public_ip"></a> [associate\_public\_ip](#input\_associate\_public\_ip) | Whether or not to associate a public IP (not EIP) | `bool` | `false` | no |
 | <a name="input_assume_role_policy"></a> [assume\_role\_policy](#input\_assume\_role\_policy) | Policy document allowing Principals to assume this role (e.g. Trust Relationship) | `string` | `"{\n \"Version\": \"2012-10-17\",\n \"Statement\": [\n   {\n     \"Action\": \"sts:AssumeRole\",\n     \"Principal\": {\n       \"Service\": \"ec2.amazonaws.com\"\n     },\n     \"Effect\": \"Allow\",\n     \"Sid\": \"\"\n   }\n ]\n}\n"` | no |
-| <a name="input_ebs_block_devices"></a> [ebs\_block\_devices](#input\_ebs\_block\_devices) | A list of maps that contains 3 keys: device name, volume size, and volume type | <pre>list(object({<br>    device_name = string<br>    volume_size = string<br>    volume_type = string<br>  }))</pre> | `[]` | no |
 | <a name="input_ebs_kms_key_arn"></a> [ebs\_kms\_key\_arn](#input\_ebs\_kms\_key\_arn) | The ARN of the KMS key to encrypt EBS volumes | `string` | n/a | yes |
 | <a name="input_ebs_optimized"></a> [ebs\_optimized](#input\_ebs\_optimized) | Whether or not the instance is ebs optimized | `bool` | `false` | no |
+| <a name="input_ebs_volumes"></a> [ebs\_volumes](#input\_ebs\_volumes) | A list of maps that must contain device\_name (ex. '/dev/sdb') and size (in GB). Optional args include type, throughput, iops, multi\_attach\_enabled, final\_snapshot, snapshot\_id, outpost\_arn, force\_detach, skip\_destroy, stop\_instance\_before\_detaching, and tags | <pre>list(object({<br>    device_name                    = string<br>    size                           = number<br>    type                           = string<br>    throughput                     = optional(number)<br>    iops                           = optional(number)<br>    multi_attach_enabled           = optional(bool, false)<br>    final_snapshot                 = optional(string)<br>    snapshot_id                    = optional(string)<br>    outpost_arn                    = optional(string)<br>    force_detach                   = optional(bool, false)<br>    skip_destroy                   = optional(bool, false)<br>    stop_instance_before_detaching = optional(bool, false)<br>    tags                           = optional(map(string), {})<br>  }))</pre> | `[]` | no |
 | <a name="input_ec2_instance_type"></a> [ec2\_instance\_type](#input\_ec2\_instance\_type) | The type of instance to start | `string` | n/a | yes |
 | <a name="input_ec2_key_pair"></a> [ec2\_key\_pair](#input\_ec2\_key\_pair) | The key name to use for the instance | `string` | n/a | yes |
 | <a name="input_egress_rules"></a> [egress\_rules](#input\_egress\_rules) | The list of rules for egress traffic. Required fields for each rule are 'protocol', 'from\_port', 'to\_port', and at least one of 'cidr\_blocks', 'ipv6\_cidr\_blocks', 'security\_groups', 'self', or 'prefix\_list\_sg'. Optional fields are 'description' and those not used from the previous list | <pre>list(object({<br>    protocol         = string<br>    from_port        = string<br>    to_port          = string<br>    cidr_blocks      = optional(list(string), [])<br>    ipv6_cidr_blocks = optional(list(string), [])<br>    prefix_list_ids  = optional(list(string), [])<br>    security_groups  = optional(list(string), [])<br>    self             = optional(bool)<br>    description      = optional(string, "Managed by Terraform")<br>  }))</pre> | `[]` | no |
@@ -259,7 +282,6 @@ module "ad2" {
 | <a name="input_target_group_arns"></a> [target\_group\_arns](#input\_target\_group\_arns) | A list of aws\_alb\_target\_group ARNs, for use with Application Load Balancing | `list(string)` | `[]` | no |
 | <a name="input_user_data"></a> [user\_data](#input\_user\_data) | a list of maps that contain the path to the user data script (starting at the shellScript folder) and the variables for that script. | `list(map(any))` | `[]` | no |
 | <a name="input_user_data_gzip"></a> [user\_data\_gzip](#input\_user\_data\_gzip) | Whether or not to gzip the user data for the instance | `bool` | `true` | no |
-| <a name="input_volume_delete_on_termination"></a> [volume\_delete\_on\_termination](#input\_volume\_delete\_on\_termination) | Whether to delete attached EBS volumes when their EC2 instance is terminated | `bool` | `false` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The id of the vpc where resources are being created | `string` | n/a | yes |
 
 ## Outputs

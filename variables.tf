@@ -35,20 +35,24 @@ variable "root_volume_size" {
   type        = string
 }
 
-variable "ebs_block_devices" {
-  description = "A list of maps that contains 3 keys: device name, volume size, and volume type"
+variable "ebs_volumes" {
+  description = "A list of maps that must contain device_name (ex. '/dev/sdb') and size (in GB). Optional args include type, throughput, iops, multi_attach_enabled, final_snapshot, snapshot_id, outpost_arn, force_detach, skip_destroy, stop_instance_before_detaching, and tags"
   type = list(object({
-    device_name = string
-    volume_size = string
-    volume_type = string
+    device_name                    = string
+    size                           = number
+    type                           = string
+    throughput                     = optional(number)
+    iops                           = optional(number)
+    multi_attach_enabled           = optional(bool, false)
+    final_snapshot                 = optional(string)
+    snapshot_id                    = optional(string)
+    outpost_arn                    = optional(string)
+    force_detach                   = optional(bool, false)
+    skip_destroy                   = optional(bool, false)
+    stop_instance_before_detaching = optional(bool, false)
+    tags                           = optional(map(string), {})
   }))
   default = []
-}
-
-variable "volume_delete_on_termination" {
-  description = "Whether to delete attached EBS volumes when their EC2 instance is terminated"
-  type        = bool
-  default     = false
 }
 
 variable "ebs_optimized" {

@@ -21,17 +21,31 @@ resource "aws_subnet" "main" {
 module "ec2_test" {
   source = "../.."
 
-  name = "ec2_module_test_instance"
+  name = "ec2-module-test-instance"
 
   ami               = data.aws_ami.ami.id
   ec2_instance_type = "t2.micro"
   instance_count    = 2
 
-  vpc_id = aws_vpc.main.id
+  vpc_id     = aws_vpc.main.id
   subnet_ids = [aws_subnet.main.id]
 
   ec2_key_pair    = "ec2-module-test"
   ebs_kms_key_arn = aws_kms_key.ebs_key.arn
+
+  # EBS
+  ebs_volumes = [
+    {
+      device_name = "/dev/sdb"
+      size        = 20
+      type        = "gp3"
+    },
+    {
+      device_name = "/dev/sdc"
+      size        = 20
+      type        = "gp3"
+    }
+  ]
 
   # Storage
   root_volume_size = "20"

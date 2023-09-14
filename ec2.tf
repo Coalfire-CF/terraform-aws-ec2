@@ -22,18 +22,6 @@ resource "aws_instance" "this" {
     kms_key_id  = var.ebs_kms_key_arn
   }
 
-  dynamic "ebs_block_device" {
-    for_each = var.ebs_block_devices
-    content {
-      device_name           = ebs_block_device.value["device_name"]
-      volume_size           = ebs_block_device.value["volume_size"]
-      volume_type           = ebs_block_device.value["volume_type"]
-      encrypted             = true
-      delete_on_termination = var.volume_delete_on_termination
-      kms_key_id            = var.ebs_kms_key_arn
-    }
-  }
-
   ebs_optimized = var.ebs_optimized
 
 
@@ -42,18 +30,22 @@ resource "aws_instance" "this" {
 
 
   ###  TAGS  ###
-  tags = merge({
-    Name       = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}",
-    PatchGroup = tostring(count.index % 2 + 1) # Default PatchGroup tag increments in range 1-2
+  tags = merge(
+    {
+      Name       = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}",
+      PatchGroup = tostring(count.index % 2 + 1) # Default PatchGroup tag increments in range 1-2
     },
     var.tags,
-  var.global_tags)
+    var.global_tags
+  )
 
-  volume_tags = merge({
-    Name = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}"
+  volume_tags = merge(
+    {
+      Name = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}"
     },
     var.tags,
-  var.global_tags)
+    var.global_tags
+  )
 
   lifecycle {
     ignore_changes = [root_block_device, ebs_block_device, user_data, ami]
