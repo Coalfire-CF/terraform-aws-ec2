@@ -203,6 +203,12 @@ variable "iam_policies" {
   default     = []
 }
 
+variable "add_SSMManagedInstanceCore" {
+  description = "Whether or not to apply the SSMManagedInstanceCore to the IAM role"
+  type        = bool
+  default     = true
+}
+
 variable "assume_role_policy" {
   description = "Policy document allowing Principals to assume this role (e.g. Trust Relationship)"
   type        = string
