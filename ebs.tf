@@ -1,7 +1,7 @@
 resource "aws_ebs_volume" "this" {
   count = length(local.additional_ebs_volumes)
 
-  availability_zone    = local.additional_ebs_volumes[count.index][0]
+  availability_zone    = local.additional_ebs_volumes[count.index][0].availability_zone
   encrypted            = true
   size                 = local.additional_ebs_volumes[count.index][1].size
   type                 = local.additional_ebs_volumes[count.index][1].type
@@ -14,7 +14,12 @@ resource "aws_ebs_volume" "this" {
   outpost_arn          = local.additional_ebs_volumes[count.index][1].outpost_arn
   tags = merge(
     {
-      Name = var.instance_count == 1 ? var.name : "${var.name}${count.index / var.instance_count + 1}"
+      Name                        = var.instance_count == 1 ? var.name : "${var.name}${count.index / var.instance_count + 1}",
+      AssociatedInstance          = local.additional_ebs_volumes[count.index][0].id
+      ForceDetach                 = local.additional_ebs_volumes[count.index][1].force_detach
+      SkipDestroy                 = local.additional_ebs_volumes[count.index][1].skip_destroy
+      StopInstanceBeforeDetaching = local.additional_ebs_volumes[count.index][1].stop_instance_before_detaching
+      DeviceName                  = local.additional_ebs_volumes[count.index][1].device_name
     },
     local.additional_ebs_volumes[count.index][1].tags,
     var.global_tags
@@ -22,12 +27,12 @@ resource "aws_ebs_volume" "this" {
 }
 
 resource "aws_volume_attachment" "this" {
-  for_each = local.additional_ebs_volumes
+  count = length(aws_ebs_volume.this[*])
 
-  device_name                    = each.value.device_name
-  instance_id                    = each.key.device_name
-  volume_id                      = each.value.device_name
-  force_detach                   = local.additional_ebs_volumes[count.index][1].force_detach
-  skip_destroy                   = local.additional_ebs_volumes[count.index][1].skip_destroy
-  stop_instance_before_detaching = local.additional_ebs_volumes[count.index][1].stop_instance_before_detaching
+  device_name                    = aws_ebs_volume.this[count.index].tags.DeviceName
+  instance_id                    = aws_ebs_volume.this[count.index].tags.AssociatedInstance
+  volume_id                      = aws_ebs_volume.this[count.index].id
+  force_detach                   = aws_ebs_volume.this[count.index].tags.ForceDetach
+  skip_destroy                   = aws_ebs_volume.this[count.index].tags.SkipDestroy
+  stop_instance_before_detaching = aws_ebs_volume.this[count.index].tags.StopInstanceBeforeDetaching
 }

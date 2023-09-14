@@ -26,29 +26,5 @@ locals {
 
 # For additional ebs attachment
 locals {
-  # Sorting workaround graciously stolen from https://josusb.com/blog/terraform-sort/
-  sorted_instance_values = reverse(distinct(sort([
-    for instance in aws_instance.this[*]: instance.availability_zone
-  ])))
-
-  sorted_instance_ids = compact(flatten([
-    for value in local.sorted_instance_values: [
-      for instance in aws_instance.this[*]: 
-        instance.id if instance.availability_zone == value
-    ]
-  ]))
-
-  sorted_ebs_values = reverse(distinct(sort([
-    for volume in aws_ebs_volume.this: volume.availability_zone
-  ])))
-
-  sorted_ebs_ids = compact(flatten([
-    for value in local.sorted_ebs_values: [
-      for volume in aws_ebs_volume.this: 
-        volume.id if volume.availability_zone == value
-    ]
-  ]))
-
-  additional_ebs_volumes = zipmap(local.sorted_instance_ids, local.sorted_ebs_ids)
-
+  additional_ebs_volumes = setproduct(aws_instance.this[*], var.ebs_volumes)
 }

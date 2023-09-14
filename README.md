@@ -84,29 +84,49 @@ The arguments accepted by both `ingress_rules` and `egress_rules` are also ident
 
 All ingress and egress variables follow the [official Terraform documentation on inline security group rules](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group#ingress).
 
+### <a name="section_multiple_ebs_volumes"></a> [Multiple EBS Volumes](#section\_multiple\_ebs_\volumes)
+
+The purpose of this variable is to create and attach additional EBS volumes to each created instance. When creating the list of volume objects, the code should resemble:
+
+``` HCL
+    ebs_volumes = [
+    {
+      device_name  = "/dev/sdb"
+      size         = 20
+      type         = "gp3"
+    },
+    {
+      device_name  = "/dev/sdc"
+      size         = 20
+      type         = "gp3"
+      throughput   = 800
+      force_detach = true
+    }
+  ]
+```
+The arguments accepted by `ebs_volumes` are as follows (All bool values default to `false`):
+
+| Name | Type | Required |
+|------|------|:--------:|
+| <a name="input_device_name"></a> [device_name](#input\_device\_name) | `string` | yes |
+| <a name="input_size"></a> [size](#input\_size) | `number` | yes |
+| <a name="input_type"></a> [type](#input\_type) | `string` | yes |
+| <a name="input_throughput"></a> [throughput](#input\_throughput) | `number` | no |
+| <a name="input_iops"></a> [iops](#input\_iops) | `number` | no |
+| <a name="input_multi_attach_enabled"></a> [multi_attach_enabled](#input\_multi\_attach\_enabled) | `bool` | no |
+| <a name="input_final_snapshot"></a> [final_snapshot](#input\_final\_snapshot) | `string` | no |
+| <a name="input_snapshot_id"></a> [snapshot_id](#input\_snapshot\_id) | `string` | no |
+| <a name="input_outpost_arn"></a> [outpost_arn](#input\_outpost_arn) | `string` | no |
+| <a name="input_force_detach"></a> [force_detach](#input\_force\_detach) | `bool` | no |
+| <a name="input_skip_destroy"></a> [skip_destroy](#input\_skip\_destroy) | `bool` | no |
+| <a name="input_stop_instance_before_detaching"></a> [stop_instance_before_detaching](#input\_stop\_instance\_before\_detaching) | `bool` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | `map(string)` | no |
+
 
 ### IAM
 
 ```hcl-terraform
 iam_policies      = [aws_iam_policy.test_policy_1.arn, ...]
-
-```
-
-### Multiple EBS Volumes
-
-The root ebs volume is handled with the below variables:
-
-However, if additional ebs volumes are required, you can use the below variable:
-
-```hcl-terraform
-ebs_block_devices = [
-    {
-      device_name = "/dev/sdf"
-      volume_size = "50"
-      volume_type = "gp2"
-    },
-    ...
-  ]
 
 ```
 
@@ -141,13 +161,13 @@ module "ad2" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >=3.26 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.15.0, < 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >=3.26 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.15.0, < 6.0 |
 | <a name="provider_cloudinit"></a> [cloudinit](#provider\_cloudinit) | n/a |
 
 ## Modules
@@ -183,8 +203,7 @@ No modules.
 | <a name="input_ec2_key_pair"></a> [ec2\_key\_pair](#input\_ec2\_key\_pair) | The key name to use for the instance | `string` | n/a | yes |
 | <a name="input_root_volume_type"></a> [root\_volume\_type](#input\_root\_volume\_type) | The type of the root ebs volume on the ec2 instances created | `string` | `"gp3"` | no |
 | <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | The size of the root ebs volume on the ec2 instances created | `string` | n/a | yes |
-| <a name="input_ebs_block_devices"></a> [ebs\_block\_devices](#input\_ebs\_block\_devices) | A list of maps that contains 3 keys: device name, volume size, and volume type | `list(map(string))` | `[]` | no |
-| <a name="input_volume_delete_on_termination"></a> [volume\_delete\_on\_termination](#input\_volume\_delete\_on\_termination) | Whether to delete attached EBS volumes when their EC2 instance is terminated | `bool` | `false` | no |
+| <a name="input_ebs_volumes"></a> [ebs\_volumes](#input\_ebs\_volumes) | A list of maps that contains 3 required fields, device name, volume size, and type, as well as optional fields as defined in the [Multiple EBS Volumes](#section\_multiple\_ebs\_volumes) section  | `list(object(...))` _see [Multiple EBS Volumes](#section\_multiple\_ebs\_volumes) section above_ | `[]` | no |
 | <a name="input_ebs_optimized"></a> [ebs\_optimized](#input\_ebs\_optimized) | Whether or not the instance is ebs optimized | `bool` | `false` | no |
 | <a name="input_ebs_kms_key_arn"></a> [ebs\_kms\_key\_arn](#input\_ebs\_kms\_key\_arn) | The ARN of the KMS key to encrypt EBS volumes | `string` | n/a | yes |
 | <a name="input_target_group_arns"></a> [target\_group\_arns](#input\_target\_group\_arns) | A list of aws\_alb\_target\_group ARNs, for use with Application Load Balancing | `list(string)` | `[]` | no |

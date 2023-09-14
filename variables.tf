@@ -40,7 +40,7 @@ variable "ebs_volumes" {
   type = list(object({
     device_name                    = string
     size                           = number
-    type                           = optional(string, "gp2")
+    type                           = string
     throughput                     = optional(number)
     iops                           = optional(number)
     multi_attach_enabled           = optional(bool, false)

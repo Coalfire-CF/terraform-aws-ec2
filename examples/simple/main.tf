@@ -39,13 +39,11 @@ module "ec2_test" {
       device_name = "/dev/sdb"
       size        = 20
       type        = "gp3"
-      delete_on_termination = true
     },
     {
       device_name = "/dev/sdc"
       size        = 20
       type        = "gp3"
-      delete_on_termination = true
     }
   ]
 
