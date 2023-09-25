@@ -19,7 +19,8 @@ resource "aws_subnet" "main" {
 }
 
 module "ec2_test" {
-  source = "../.."
+  #source = "git::https://github.com/Coalfire-CF/ACE-AWS-SecurityGroup"
+  source = "../.." # For testing within current ACE-AWS-EC2 branch
 
   name = "ec2-module-test-instance"
 
