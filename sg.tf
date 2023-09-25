@@ -1,5 +1,5 @@
 module "security_group" {
-  source = "../ACE-AWS-SecurityGroup"
+  source = "git::https://github.com/Coalfire-CF/ACE-AWS-SecurityGroup?ref=v0.0.1"
 
   name        = "${var.name}-sg"
   description = var.sg_description
