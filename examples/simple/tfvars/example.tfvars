@@ -1,4 +1,5 @@
 aws_region      = "us-east-2"
 profile         = "sandbox"
-vpc_cidr_prefix = "10.2"
+vpc_cidr        = "10.2.0.0/24"
+subnet_cidr     = "10.2.0.0/24"
 key_name        = "ec2-module-test"

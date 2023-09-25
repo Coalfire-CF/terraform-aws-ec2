@@ -10,12 +10,12 @@ data "aws_ami" "ami" {
 }
 
 resource "aws_vpc" "main" {
-  cidr_block = "${var.vpc_cidr_prefix}.0.0/24"
+  cidr_block = var.vpc_cidr
 }
 
 resource "aws_subnet" "main" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "${var.vpc_cidr_prefix}.0.0/24"
+  cidr_block = var.subnet_cidr
 }
 
 module "ec2_test" {

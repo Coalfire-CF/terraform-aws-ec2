@@ -14,8 +14,14 @@ variable "profile" {
   type        = string
 }
 
-variable "vpc_cidr_prefix" {
+variable "vpc_cidr" {
   description = "The cidr block for the vpc created for testing the security group"
   type        = string
-  default     = "10.0"
+  default     = "10.1.0.0/24"
+}
+
+variable "subnet_cidr" {
+  description = "The cidr block for the subnet created for testing the security group"
+  type        = string
+  default     = "10.1.0.0/24"
 }
