@@ -1,6 +1,6 @@
 ## EC2 module simple example
 
-This example creates 2 EC2 instances using the EC2 module, along with a VPC, subnet, and the keys required by the module.
+This example creates 2 EC2 instances using the EC2 module, along with a temporary VPC, subnet, and the keys required to test the module.
 
 # Prerequisites
 
