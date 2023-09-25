@@ -223,7 +223,7 @@ module "ad2" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | git::https://github.com/Coalfire-CF/ACE-AWS-SecurityGroup | v0.0.1 |
+| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | git::https://github.com/Coalfire-CF/ACE-AWS-SecurityGroup | n/a |
 
 ## Resources
 
