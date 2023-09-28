@@ -1,23 +1,10 @@
-<div align="center">
-<img src="coalfire_logo.png" width="200">
+![Coalfire](coalfire_logo.png)
 
 # AWS EC2 Terraform Module
 
 ## Description
 
 The EC2 general purpose module creates an EC2 instance for your project. Configuration for the EC2 instance includes networking, storage, IAM, and tags.
-
-Additional information:
-- Version: 1.0.0 - 2022-11-17
-- Terraform Version: >= 1.0
-- Cloud(s) supported: Government/Commercial
-- Product Version/License: N/A
-- FedRAMP Compliance Support: General usage
-- DoD Compliance Support: General usage
-- Misc Framework Support:
-- Launchpad validated version: 2.6
-
-FedRAMP Compliance: High
 
 ### Multiple ENIs
 
