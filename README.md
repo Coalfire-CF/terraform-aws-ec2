@@ -278,7 +278,7 @@ Settings that should be applied to repos
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | git::https://github.com/Coalfire-CF/terraform-aws-securitygroup | n/a |
+| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | https://github.com/Coalfire-CF/terraform-aws-securitygroup | n/a |
 
 ## Resources
 
