@@ -29,7 +29,7 @@ This is an example of how to create an EC2 instance using this module, with gene
 
 ```
 module "ec2_test" {
-  source = "../.."
+  source = "git::https://github.com/Coalfire-CF/terraform-aws-ec2"
 
   name = var.instance_name
 
@@ -140,7 +140,7 @@ As shown below, the "additional_security_groups" variable can be used for this p
 
  ```hcl-terraform
 module "ad2" {
-  source = "../../../../modules/aws-coalfire-ec2"
+  source = "git::https://github.com/Coalfire-CF/terraform-aws-ec2"
   name              = "dc2"
   ami               = "ami-XXXXXX"
   ec2_instance_type = "m5a.large"
@@ -265,21 +265,21 @@ Settings that should be applied to repos
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.15.0, < 6.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.15.0, < 6.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
 | <a name="provider_cloudinit"></a> [cloudinit](#provider\_cloudinit) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | git::https://github.com/Coalfire-CF/ACE-AWS-SecurityGroup | n/a |
+| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | git::https://github.com/Coalfire-CF/terraform-aws-securitygroup | n/a |
 
 ## Resources
 
