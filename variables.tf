@@ -174,21 +174,27 @@ variable "source_dest_check" {
 }
 
 variable "user_data" {
-  description = "a list of maps that contain the path to the user data script (starting at the shellScript folder) and the variables for that script."
-  type        = list(map(any))
-  default     = []
-}
-
-variable "user_data_gzip" {
-  description = "Whether or not to gzip the user data for the instance"
-  type        = bool
-  default     = true
-}
-
-variable "simple_user_data" {
-  description = "Simple string for 1 liner user data"
+  description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead"
   type        = string
-  default     = ""
+  default     = null
+}
+
+variable "user_data_base64" {
+  description = "Can be used instead of user_data to pass base64-encoded binary data directly. Use this instead of user_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption"
+  type        = string
+  default     = null
+}
+
+variable "user_data_replace_on_change" {
+  description = "When used in combination with user_data or user_data_base64 will trigger a destroy and recreate when set to true. Defaults to false if not set"
+  type        = bool
+  default     = null
+}
+
+variable "get_password_data" {
+  description = "Whether or not to allow retrieval of the local admin password"
+  type        = bool
+  default     = false
 }
 
 variable "iam_profile" {

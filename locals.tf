@@ -3,16 +3,6 @@ locals {
   create_sg   = length(var.ingress_rules) > 0 || length(var.egress_rules) > 0 ? 1 : 0
 }
 
-# Gathers user data from maps listed in module calls
-locals {
-  user_data = var.user_data == null ? null : [
-    for script in var.user_data : templatefile(
-      "${script["path"]["module_directory"]}/${script["path"]["folder_name"]}/${script["path"]["file_name"]}",
-      script["vars"]
-    )
-  ]
-}
-
 # For lb attachment
 locals {
   full_size = length(aws_instance.this.*.id) * length(var.target_group_arns)
