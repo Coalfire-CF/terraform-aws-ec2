@@ -29,7 +29,7 @@ This is an example of how to create an EC2 instance using this module, with gene
 
 ```
 module "ec2_test" {
-  source = "git::https://github.com/Coalfire-CF/terraform-aws-ec2"
+  source = "https://github.com/Coalfire-CF/terraform-aws-ec2"
 
   name = var.instance_name
 
@@ -140,7 +140,7 @@ As shown below, the "additional_security_groups" variable can be used for this p
 
  ```hcl-terraform
 module "ad2" {
-  source = "git::https://github.com/Coalfire-CF/terraform-aws-ec2"
+  source = "https://github.com/Coalfire-CF/terraform-aws-ec2"
   name              = "dc2"
   ami               = "ami-XXXXXX"
   ec2_instance_type = "m5a.large"
