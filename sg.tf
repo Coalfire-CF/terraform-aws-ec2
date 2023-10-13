@@ -1,5 +1,5 @@
 module "security_group" {
-  source = "https://github.com/Coalfire-CF/terraform-aws-securitygroup"
+  source = "github.com/Coalfire-CF/terraform-aws-securitygroup"
 
   name        = "${var.name}-sg"
   description = var.sg_description
