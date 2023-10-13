@@ -1,6 +1,6 @@
 output "instance_id" {
   description = "The AWS Instance id created"
-  value       = aws_instance.this.*.id
+  value       = aws_instance.this[*].id
 }
 
 output "sg_id" {
@@ -15,15 +15,19 @@ output "iam_profile" {
 
 output "primary_private_ip_addresses" {
   description = "A list of the primary private IP addesses assigned to the ec2 instance"
-  value       = aws_instance.this.*.private_ip
+  value       = aws_instance.this[*].private_ip
 }
 
 output "tags" {
   description = "List of tags of instances"
-  value       = aws_instance.this.*.tags
+  value       = aws_instance.this[*].tags
 }
 
 output "iam_role_arn" {
   description = "The AWS IAM Role arn created"
-  value       = aws_iam_role.this_role.*.arn
+  value       = aws_iam_role.this_role[*].arn
+}
+output "iam_role_name" {
+  description = "The AWS IAM Role arn created"
+  value       = aws_iam_role.this_role[*].name
 }
