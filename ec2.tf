@@ -12,7 +12,7 @@ resource "aws_instance" "this" {
   metadata_options {
     http_endpoint               = "enabled"
     http_put_response_hop_limit = 1
-    http_tokens                 = "required"
+    http_tokens                 = var.http_tokens
     instance_metadata_tags      = "enabled"
   }
 
@@ -59,6 +59,4 @@ resource "aws_instance" "this" {
   lifecycle {
     ignore_changes = [root_block_device, ebs_block_device, user_data, ami]
   }
-
-  depends_on = [var.module_depends_on]
 }
