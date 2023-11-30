@@ -235,8 +235,12 @@ variable "assume_role_policy" {
 EOF
 }
 
-variable "module_depends_on" {
-  description = "A variable to simulate the depends on feature that resources have"
+variable "http_tokens" {
+  description = "Whether or not the metadata service requires session tokens, required=IMDSv2, optional=IMDSv1"
   type        = any
-  default     = null
+  default     = "required"
+  validation {
+    condition     = can(regex("^(required|optional)$", var.http_tokens))
+    error_message = "ERROR: Valid values are 'required' or 'optional'."
+  }
 }
