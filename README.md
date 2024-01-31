@@ -75,16 +75,20 @@ module "ec2_test" {
 ### User Data
 
 ```hcl-terraform
-  user_data = templatefile("${path.module}/../../shellscripts/linux/ud-os-join-ad.sh", {
-    aws_region            = var.aws_region
-    domain_name           = local.domain_name
-    dom_disname           = local.dom_disname
-    ou_env                = var.lin_prod_ou_env
-    linux_admins_ad_group = var.linux_admins_ad_group
-    domain_join_user_name = var.domain_join_user_name
-    sm_djuser_path        = "${var.ad_secrets_path}${var.domain_join_user_name}"
-    is_asg                = "false"
-  })
+user_data = [
+    {
+      path = {
+        folder_name = "linux",
+        file_name   = "test.sh"
+      }
+      vars = {
+        test-var1 = "test1",
+        test-var2 = "test2"
+      }
+    },
+    ...
+  ]
+
 ```
 
 ### Security Groups
