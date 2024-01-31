@@ -33,6 +33,17 @@ module "ec2_test" {
   ec2_key_pair    = "ec2-module-test"
   ebs_kms_key_arn = aws_kms_key.ebs_key.arn
 
+  user_data = templatefile("${path.module}/../../shellscripts/linux/ud-os-join-ad.sh", {
+    aws_region            = var.aws_region
+    domain_name           = local.domain_name
+    dom_disname           = local.dom_disname
+    ou_env                = var.lin_prod_ou_env
+    linux_admins_ad_group = var.linux_admins_ad_group
+    domain_join_user_name = var.domain_join_user_name
+    sm_djuser_path        = "${var.ad_secrets_path}${var.domain_join_user_name}"
+    is_asg                = "false"
+  })
+
   # EBS
   ebs_volumes = [
     {
