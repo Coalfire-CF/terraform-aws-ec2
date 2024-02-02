@@ -31,3 +31,8 @@ output "iam_role_name" {
   description = "The AWS IAM Role arn created"
   value       = aws_iam_role.this_role[*].name
 }
+
+output "network_interface_id" {
+  description = "The network interface ID for the AWS instance"
+  value = aws_instance.this[*].primary_network_interface_id
+}
