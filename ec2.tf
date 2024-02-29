@@ -21,7 +21,7 @@ resource "aws_instance" "this" {
   private_ip                  = var.private_ip
   associate_public_ip_address = var.associate_public_ip || var.associate_eip
   source_dest_check           = var.source_dest_check
-  vpc_security_group_ids      = length(var.additional_security_groups) > 0 ? [module.security_group.id] : []
+  vpc_security_group_ids      = length(var.additional_security_groups) > 0 ? [] : [module.security_group.id]
 
   ###  STORAGE  ###
   root_block_device {
