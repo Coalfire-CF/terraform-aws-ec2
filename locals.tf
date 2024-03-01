@@ -10,7 +10,6 @@ locals {
 
 # For additional sg attachment
 locals {
-  additional_sg_to_primary_eni    = setproduct(var.additional_security_groups, aws_instance.this[*].primary_network_interface_id)
   additional_sg_to_additional_eni = setproduct(var.additional_security_groups, var.additional_eni_ids)
 }
 
