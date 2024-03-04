@@ -189,7 +189,6 @@ module "ad2" {
 | [aws_lb_target_group_attachment.target_group_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group_attachment) | resource |
 | [aws_network_interface_attachment.eni_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface_attachment) | resource |
 | [aws_network_interface_sg_attachment.additional](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface_sg_attachment) | resource |
-| [aws_network_interface_sg_attachment.primary](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface_sg_attachment) | resource |
 | [aws_volume_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/volume_attachment) | resource |
 | [aws_iam_policy.AmazonSSMManagedInstanceCore](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy) | data source |
 
@@ -240,6 +239,7 @@ module "ad2" {
 | <a name="output_iam_role_arn"></a> [iam\_role\_arn](#output\_iam\_role\_arn) | The AWS IAM Role arn created |
 | <a name="output_iam_role_name"></a> [iam\_role\_name](#output\_iam\_role\_name) | The AWS IAM Role arn created |
 | <a name="output_instance_id"></a> [instance\_id](#output\_instance\_id) | The AWS Instance id created |
+| <a name="output_network_interface_id"></a> [network\_interface\_id](#output\_network\_interface\_id) | The network interface ID for the AWS instance |
 | <a name="output_primary_private_ip_addresses"></a> [primary\_private\_ip\_addresses](#output\_primary\_private\_ip\_addresses) | A list of the primary private IP addesses assigned to the ec2 instance |
 | <a name="output_sg_id"></a> [sg\_id](#output\_sg\_id) | The id of the security group created |
 | <a name="output_tags"></a> [tags](#output\_tags) | List of tags of instances |
