@@ -58,7 +58,7 @@ variable "ebs_volumes" {
 variable "ebs_optimized" {
   description = "Whether or not the instance is ebs optimized"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "ebs_kms_key_arn" {
