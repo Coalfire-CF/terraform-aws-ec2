@@ -116,7 +116,7 @@ variable "ingress_rules" {
   description = "The list of rules for ingress traffic. Required fields for each rule are 'protocol', 'from_port', 'to_port', and at least one of 'cidr_blocks', 'ipv6_cidr_blocks', 'security_groups', 'self', or 'prefix_list_sg'. Optional fields are 'description' and those not used from the previous list"
   type = map(object({
     cidr_ipv4                    = optional(string, null)
-    cidr_ipv4                    = optional(string, null)
+    cidr_ipv6                    = optional(string, null)
     description                  = optional(string, "Managed by Terraform")
     from_port                    = optional(string, null)
     ip_protocol                  = optional(string, null)
@@ -131,7 +131,7 @@ variable "egress_rules" {
   description = "The list of rules for egress traffic. Required fields for each rule are 'protocol', 'from_port', 'to_port', and at least one of 'cidr_blocks', 'ipv6_cidr_blocks', 'security_groups', 'self', or 'prefix_list_sg'. Optional fields are 'description' and those not used from the previous list"
   type = map(object({
     cidr_ipv4                    = optional(string, null)
-    cidr_ipv4                    = optional(string, null)
+    cidr_ipv6                    = optional(string, null)
     description                  = optional(string, "Managed by Terraform")
     from_port                    = optional(string, null)
     ip_protocol                  = optional(string, null)
