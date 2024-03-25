@@ -1,12 +1,12 @@
 module "security_group" {
-  source = "github.com/Coalfire-CF/terraform-aws-securitygroup?ref=v1.0.0"
+  source = "github.com/Coalfire-CF/terraform-aws-securitygroup?ref=b7720e6f7bf50f8ecd39d90818523efcc5e896aa"
 
   name        = "${var.name}-sg"
   description = var.sg_description
   vpc_id      = var.vpc_id
 
-  ingress_rules = length(var.ingress_rules) == 0 ? null : var.ingress_rules
-  egress_rules  = length(var.egress_rules) == 0 ? null : var.egress_rules
+  ingress_rules = length(var.ingress_rules) == 0 ? {} : var.ingress_rules
+  egress_rules  = length(var.egress_rules) == 0 ? {} : var.egress_rules
 
   network_interface_resource_associations = var.additional_eni_ids
 }
