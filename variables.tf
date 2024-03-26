@@ -58,7 +58,7 @@ variable "ebs_volumes" {
 variable "ebs_optimized" {
   description = "Whether or not the instance is ebs optimized"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "ebs_kms_key_arn" {
@@ -114,34 +114,32 @@ variable "sg_description" {
 
 variable "ingress_rules" {
   description = "The list of rules for ingress traffic. Required fields for each rule are 'protocol', 'from_port', 'to_port', and at least one of 'cidr_blocks', 'ipv6_cidr_blocks', 'security_groups', 'self', or 'prefix_list_sg'. Optional fields are 'description' and those not used from the previous list"
-  type = list(object({
-    protocol         = string
-    from_port        = string
-    to_port          = string
-    cidr_blocks      = optional(list(string), [])
-    ipv6_cidr_blocks = optional(list(string), [])
-    prefix_list_ids  = optional(list(string), [])
-    security_groups  = optional(list(string), [])
-    self             = optional(bool)
-    description      = optional(string, "Managed by Terraform")
+  type = map(object({
+    cidr_ipv4                    = optional(string, null)
+    cidr_ipv6                    = optional(string, null)
+    description                  = optional(string, "Managed by Terraform")
+    from_port                    = optional(string, null)
+    ip_protocol                  = optional(string, null)
+    prefix_list_id               = optional(string, null)
+    referenced_security_group_id = optional(string, null)
+    to_port                      = optional(string, null)
   }))
-  default = []
+  default = {}
 }
 
 variable "egress_rules" {
   description = "The list of rules for egress traffic. Required fields for each rule are 'protocol', 'from_port', 'to_port', and at least one of 'cidr_blocks', 'ipv6_cidr_blocks', 'security_groups', 'self', or 'prefix_list_sg'. Optional fields are 'description' and those not used from the previous list"
-  type = list(object({
-    protocol         = string
-    from_port        = string
-    to_port          = string
-    cidr_blocks      = optional(list(string), [])
-    ipv6_cidr_blocks = optional(list(string), [])
-    prefix_list_ids  = optional(list(string), [])
-    security_groups  = optional(list(string), [])
-    self             = optional(bool)
-    description      = optional(string, "Managed by Terraform")
+  type = map(object({
+    cidr_ipv4                    = optional(string, null)
+    cidr_ipv6                    = optional(string, null)
+    description                  = optional(string, "Managed by Terraform")
+    from_port                    = optional(string, null)
+    ip_protocol                  = optional(string, null)
+    prefix_list_id               = optional(string, null)
+    referenced_security_group_id = optional(string, null)
+    to_port                      = optional(string, null)
   }))
-  default = []
+  default = {}
 }
 
 variable "tags" {
