@@ -42,6 +42,7 @@ resource "aws_instance" "this" {
   tags = merge(
     {
       Name       = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}",
+      CNAME      = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}",
       PatchGroup = tostring(count.index % 2 + 1) # Default PatchGroup tag increments in range 1-2
     },
     var.tags,
