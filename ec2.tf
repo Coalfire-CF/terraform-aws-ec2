@@ -58,7 +58,7 @@ resource "aws_instance" "this" {
     precondition {
       condition     = (data.aws_ec2_instance_type.this.ebs_optimized_support == "unsupported" && var.ebs_optimized == false) || (data.aws_ec2_instance_type.this.ebs_optimized_support == "supported" && var.ebs_optimized == true) || (data.aws_ec2_instance_type.this.ebs_optimized_support == "default" && var.ebs_optimized == true)
       error_message = <<-EOT
-  The instance type (${var.ec2_instance_type}) has EBS Optimized value of (${data.aws_ec2_instance_type.this.ebs_optimized_support}), 
+  The instance type (${var.ec2_instance_type}) has an EBS Optimized value of (${data.aws_ec2_instance_type.this.ebs_optimized_support}), 
   but variable ebs_optimized is set to (${var.ebs_optimized}) (default is 'true').
   Please ensure the ebs_optimized variable matches the EBS Optimized support of the instance type.
   EOT
