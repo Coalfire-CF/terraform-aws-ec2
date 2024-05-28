@@ -56,7 +56,7 @@ resource "aws_instance" "this" {
   lifecycle {
     ignore_changes = [root_block_device, ebs_block_device, user_data, ami]
     precondition {
-      condition     = (data.aws_ec2_instance_type.this.ebs_optimized_support == "unsupported" && var.ebs_optimized == false) || (data.aws_ec2_instance_type.this.ebs_optimized_support == "supported" && var.ebs_optimized == true)
+      condition     = (data.aws_ec2_instance_type.this.ebs_optimized_support == "unsupported" && var.ebs_optimized == false) || (data.aws_ec2_instance_type.this.ebs_optimized_support == "supported" && var.ebs_optimized == true) || (data.aws_ec2_instance_type.this.ebs_optimized_support == "default" && var.ebs_optimized == true)
       error_message = <<-EOT
   The instance type (${var.ec2_instance_type}) has EBS Optimized value of (${data.aws_ec2_instance_type.this.ebs_optimized_support}), 
   but variable ebs_optimized is set to (${var.ebs_optimized}) (default is 'true').
