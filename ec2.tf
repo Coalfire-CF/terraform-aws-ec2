@@ -1,10 +1,14 @@
+data "aws_ec2_instance_type" "this" {
+  instance_type = var.ec2_instance_type
+}
+
 resource "aws_instance" "this" {
   ###  BASICS  ###
-  ami           = var.ami
-  instance_type = var.ec2_instance_type
-  count         = var.instance_count
-  key_name      = var.ec2_key_pair
-  monitoring    = true
+  ami                         = var.ami
+  instance_type               = var.ec2_instance_type
+  count                       = var.instance_count
+  key_name                    = var.ec2_key_pair
+  monitoring                  = true
   user_data                   = var.user_data
   user_data_base64            = var.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
@@ -51,5 +55,13 @@ resource "aws_instance" "this" {
 
   lifecycle {
     ignore_changes = [root_block_device, ebs_block_device, user_data, ami]
+    precondition {
+      condition     = (data.aws_ec2_instance_type.this.ebs_optimized_support == "unsupported" && var.ebs_optimized == false) || (data.aws_ec2_instance_type.this.ebs_optimized_support == "supported" && var.ebs_optimized == true)
+      error_message = <<-EOT
+  The instance type (${var.ec2_instance_type}) has EBS Optimized value of (${data.aws_ec2_instance_type.this.ebs_optimized_support}), 
+  but variable ebs_optimized is set to (${var.ebs_optimized}) (default is 'true').
+  Please ensure the ebs_optimized variable matches the EBS Optimized support of the instance type.
+  EOT
+    }
   }
 }
