@@ -47,25 +47,25 @@ module "ec2_test" {
   root_volume_size = var.instance_volume_size
 
   # Security Group Rules
-  ingress_rules = [{
-    protocol    = "tcp"
-    from_port   = "443"
-    to_port     = "443"
-    cidr_blocks = [aws_vpc.main.cidr_block]
-    },
-    {
-      protocol    = "tcp"
-      from_port   = "22"
-      to_port     = "22"
-      cidr_blocks = [aws_vpc.main.cidr_block]
-  }]
+    ingress_rules = {
+    "rdp" = {
+      ip_protocol = "tcp"
+      from_port   = "3389"
+      to_port     = "3389"
+      cidr_ipv4   = var.cidr_for_remote_access
+      description = "RDP"
+    }
+  }
 
-  egress_rules = [{
-    protocol    = "-1"
-    from_port   = "0"
-    to_port     = "0"
-    cidr_blocks = ["0.0.0.0/0"]
-  }]
+  egress_rules = {
+    "allow_all_egress" = {
+      ip_protocol = "-1"
+      from_port   = "0"
+      to_port     = "0"
+      cidr_ipv4   = "0.0.0.0/0"
+      description = "Allow all egress"
+    }
+  }
 
   # Tagging
   global_tags = {}
@@ -88,19 +88,30 @@ module "ec2_test" {
 ```
 
 ### Security Groups
-
+Ingress Rules:
 ```hcl-terraform
-cidr_security_group_rules = [
-    {
-      type        = ["ingress"],
-      protocol    = ["tcp"],
-      from_port   = ["22"],
-      to_port     = ["22"],
-      cidr_blocks = var.cidrs_for_remote_access
-      description = ["test1"]
-    },
-    ...
-  ]
+ingress_rules = {
+    "rdp" = {
+      ip_protocol = "tcp"
+      from_port   = "3389"
+      to_port     = "3389"
+      cidr_ipv4   = var.cidr_for_remote_access
+      description = "RDP"
+    }
+  }
+```
+
+Egress Rules:
+```hcl-terraform
+egress_rules = {
+    "allow_all_egress" = {
+      ip_protocol = "-1"
+      from_port   = "0"
+      to_port     = "0"
+      cidr_ipv4   = "0.0.0.0/0"
+      description = "Allow all egress"
+    }
+  }
 ```
 
 ### IAM
@@ -149,7 +160,6 @@ module "ad2" {
 
   iam_profile = module.ad1.iam_profile
   additional_security_groups = [module.ad1.sg_id]
-  module_depends_on = [module.ad1.instance_id]
 }
 ```
 
