@@ -181,7 +181,7 @@ module "ad2" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | github.com/Coalfire-CF/terraform-aws-securitygroup | b6e9070a3f6201d75160c42a3f649d36cb9b2622 |
+| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | github.com/Coalfire-CF/terraform-aws-securitygroup | v1.0.1 |
 
 ## Resources
 
