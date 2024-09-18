@@ -23,7 +23,7 @@ data "aws_iam_policy" "AmazonSSMManagedInstanceCore" {
 }
 
 resource "aws_iam_role_policy_attachment" "ssm_role_policy_attach" {
-  count      = var.add_SSMManagedInstanceCore ? length(var.iam_policies) : 0
+  count      = var.add_SSMManagedInstanceCore ? 1 : 0
   policy_arn = data.aws_iam_policy.AmazonSSMManagedInstanceCore.arn
   role       = aws_iam_role.this_role[0].name
 }
