@@ -15,7 +15,7 @@ resource "aws_instance" "this" {
   get_password_data           = var.get_password_data
   metadata_options {
     http_endpoint               = "enabled"
-    http_put_response_hop_limit = 1
+    http_put_response_hop_limit = var.http_put_response_hop_limit
     http_tokens                 = var.http_tokens
     instance_metadata_tags      = "enabled"
   }

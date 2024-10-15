@@ -235,10 +235,16 @@ EOF
 
 variable "http_tokens" {
   description = "Whether or not the metadata service requires session tokens, required=IMDSv2, optional=IMDSv1"
-  type        = any
+  type        = string
   default     = "required"
   validation {
     condition     = can(regex("^(required|optional)$", var.http_tokens))
     error_message = "ERROR: Valid values are 'required' or 'optional'."
   }
+}
+
+variable "http_put_response_hop_limit" {
+  description = "Number of network hops to allow instance metadata.  This should be 2 or higher if using containers on instance and you want containers to access metadata."
+  type        = number
+  default     = 1
 }
