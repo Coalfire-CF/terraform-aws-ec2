@@ -14,10 +14,10 @@ resource "aws_instance" "this" {
   user_data_replace_on_change = var.user_data_replace_on_change
   get_password_data           = var.get_password_data
   metadata_options {
-    http_endpoint               = "enabled"
+    http_endpoint               = var.http_endpoint
     http_put_response_hop_limit = var.http_put_response_hop_limit
     http_tokens                 = var.http_tokens
-    instance_metadata_tags      = "enabled"
+    instance_metadata_tags      = var.instance_metadata_tags
   }
 
   ###  NETWORKING  ###
