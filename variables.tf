@@ -248,3 +248,15 @@ variable "http_put_response_hop_limit" {
   type        = number
   default     = 1
 }
+
+variable "http_endpoint" {
+  description = "Whether the metadata service is available. Valid values include enabled or disabled"
+  type        = string
+  default     = "enabled"
+}
+
+variable "instance_metadata_tags" {
+  description = "Enables or disables access to instance tags from the instance metadata service. Valid values include enabled or disabled"
+  type        = string
+  default     = "enabled"
+}
