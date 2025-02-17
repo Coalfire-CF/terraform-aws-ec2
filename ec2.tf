@@ -22,7 +22,11 @@ resource "aws_instance" "this" {
 
   ###  NETWORKING  ###
   subnet_id                   = element(var.subnet_ids, count.index)
-  private_ip                  = var.private_ip
+  private_ip = (
+    var.instance_count == 1 && var.private_ip != null ? var.private_ip :
+    var.instance_count > 1 && length(var.private_ips) > count.index ? var.private_ips[count.index] :
+    null
+  )
   associate_public_ip_address = var.associate_public_ip || var.associate_eip
   source_dest_check           = var.source_dest_check
   vpc_security_group_ids      = length(var.additional_security_groups) > 0 ? concat([module.security_group.id], var.additional_security_groups) : [module.security_group.id]
