@@ -83,9 +83,15 @@ variable "subnet_ids" {
 }
 
 variable "private_ip" {
-  description = "The private ip for the instance"
+  description = "Single private IP for a single instance"
   type        = string
   default     = null
+}
+
+variable "private_ips" {
+  description = "List of private IPs for multiple instances"
+  type        = list(string)
+  default     = []
 }
 
 variable "additional_security_groups" {
