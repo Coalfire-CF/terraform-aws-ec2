@@ -232,7 +232,8 @@ module "ad2" {
 | <a name="input_instance_metadata_tags"></a> [instance\_metadata\_tags](#input\_instance\_metadata\_tags) | Enables or disables access to instance tags from the instance metadata service. Valid values include enabled or disabled | `string` | `"enabled"` | no |
 | <a name="input_keys_to_grant"></a> [keys\_to\_grant](#input\_keys\_to\_grant) | A list of kms keys to grant permissions to for the role created. | `list(string)` | `[]` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the ec2 instance | `string` | n/a | yes |
-| <a name="input_private_ip"></a> [private\_ip](#input\_private\_ip) | The private ip for the instance | `string` | `null` | no |
+| <a name="input_private_ip"></a> [private\_ip](#input\_private\_ip) | Single private IP for a single instance | `string` | `null` | no |
+| <a name="input_private_ips"></a> [private\_ips](#input\_private\_ips) | List of private IPs for multiple instances | `list(string)` | `[]` | no |
 | <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | The size of the root ebs volume on the ec2 instances created | `string` | n/a | yes |
 | <a name="input_root_volume_type"></a> [root\_volume\_type](#input\_root\_volume\_type) | The type of the root ebs volume on the ec2 instances created | `string` | `"gp3"` | no |
 | <a name="input_sg_description"></a> [sg\_description](#input\_sg\_description) | This overwrites the default generated description for the security group | `string` | `"Managed by Terraform"` | no |
