@@ -272,3 +272,9 @@ variable "instance_metadata_tags" {
   type        = string
   default     = "enabled"
 }
+
+variable "volume_delete_on_termination" {
+  description = "Whether to delete attached EBS volumes when their EC2 instance is terminated"
+  type        = bool
+  default     = false
+}
