@@ -35,6 +35,12 @@ variable "root_volume_size" {
   type        = string
 }
 
+variable "ebs_block_devices" {
+  description = "A list of maps that contains 3 keys: device name, volume size, and volume type"
+  type        = list(map(string))
+  default     = []
+}
+
 variable "ebs_volumes" {
   description = "A list of maps that must contain device_name (ex. '/dev/sdb') and size (in GB). Optional args include type, throughput, iops, multi_attach_enabled, final_snapshot, snapshot_id, outpost_arn, force_detach, skip_destroy, stop_instance_before_detaching, and tags"
   type = list(object({
