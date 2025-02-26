@@ -5,7 +5,7 @@ output "instance_id" {
 
 output "sg_id" {
   description = "The id of the security group created"
-  value       = module.security_group.id
+  value       = module.security_group[*].id
 }
 
 output "iam_profile" {
