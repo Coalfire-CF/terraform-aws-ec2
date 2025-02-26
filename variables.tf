@@ -95,9 +95,14 @@ variable "private_ips" {
 }
 
 variable "additional_security_groups" {
-  description = "A list of additional security groups to attach to the network interfaces"
+  description = "List of additional security group IDs to attach to the EC2 instance"
   type        = list(string)
   default     = []
+
+  validation {
+    condition     = var.create_security_group == true || length(var.additional_security_groups) > 0
+    error_message = "When create_security_group is set to false, you must provide at least one security group in additional_security_groups."
+  }
 }
 
 variable "associate_public_ip" {
