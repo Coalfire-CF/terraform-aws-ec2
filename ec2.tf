@@ -45,6 +45,7 @@ resource "aws_instance" "this" {
       device_name           = ebs_block_device.value["device_name"]
       volume_size           = ebs_block_device.value["volume_size"]
       volume_type           = ebs_block_device.value["volume_type"]
+      iops                  = lookup(ebs_block_device.value, "iops", 3000)
       encrypted             = true
       delete_on_termination = var.volume_delete_on_termination
       kms_key_id            = var.ebs_kms_key_arn
