@@ -72,6 +72,14 @@ resource "aws_instance" "this" {
     var.global_tags
   )
 
+  volume_tags = merge(
+    {
+      Name = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}"
+    },
+    var.tags,
+    var.global_tags
+  )
+
   lifecycle {
     ignore_changes = [root_block_device, ebs_block_device, user_data, ami]
     precondition {
