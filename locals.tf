@@ -1,11 +1,10 @@
 locals {
   iam_profile = length(aws_iam_instance_profile.this_profile) > 0 ? aws_iam_instance_profile.this_profile[0].name : var.iam_profile
-  create_sg   = length(var.ingress_rules) > 0 || length(var.egress_rules) > 0 ? 1 : 0
 }
 
 # For lb attachment
 locals {
-  full_size = length(aws_instance.this.*.id) * length(var.target_group_arns)
+  full_size = length(aws_instance.this[*].id) * length(var.target_group_arns)
 }
 
 # For additional sg attachment
