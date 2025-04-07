@@ -5,7 +5,7 @@ output "instance_id" {
 
 output "sg_id" {
   description = "The id of the security group created"
-  value       = module.security_group[*].id
+  value       = try(module.security_group[0].id, null)
 }
 
 output "iam_profile" {
@@ -34,5 +34,5 @@ output "iam_role_name" {
 
 output "network_interface_id" {
   description = "The network interface ID for the AWS instance"
-  value = aws_instance.this[*].primary_network_interface_id
+  value       = aws_instance.this[*].primary_network_interface_id
 }

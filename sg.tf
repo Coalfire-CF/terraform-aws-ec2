@@ -1,5 +1,6 @@
 module "security_group" {
   source = "github.com/Coalfire-CF/terraform-aws-securitygroup?ref=v1.0.1"
+  count  = var.create_security_group ? 1 : 0
 
   name        = "${var.name}-sg"
   description = var.sg_description

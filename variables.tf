@@ -94,6 +94,12 @@ variable "private_ips" {
   default     = []
 }
 
+variable "create_security_group" {
+  description = "Whether to create a security group for this EC2 instance"
+  type        = bool
+  default     = true
+}
+
 variable "additional_security_groups" {
   description = "List of additional security group IDs to attach to the EC2 instance"
   type        = list(string)
