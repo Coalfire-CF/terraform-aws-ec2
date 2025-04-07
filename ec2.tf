@@ -39,13 +39,6 @@ resource "aws_instance" "this" {
     volume_size = var.root_volume_size
     encrypted   = true
     kms_key_id  = var.ebs_kms_key_arn
-    tags = merge(
-      {
-        Name = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}"
-      },
-      var.tags,
-      var.global_tags
-    )
   }
 
   dynamic "ebs_block_device" {
@@ -58,13 +51,6 @@ resource "aws_instance" "this" {
       encrypted             = true
       delete_on_termination = var.volume_delete_on_termination
       kms_key_id            = var.ebs_kms_key_arn
-      tags = merge(
-        {
-          Name = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}"
-        },
-        var.tags,
-        var.global_tags
-      )
     }
   }
 
@@ -85,6 +71,14 @@ resource "aws_instance" "this" {
     var.tags,
     var.global_tags
   )
+
+  volume_tags = merge(
+        {
+          Name = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}"
+        },
+        var.tags,
+        var.global_tags
+      )
 
   lifecycle {
     ignore_changes = [root_block_device, ebs_block_device, user_data, ami]
