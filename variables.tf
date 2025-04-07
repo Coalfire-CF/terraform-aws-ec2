@@ -37,8 +37,12 @@ variable "root_volume_size" {
 
 variable "ebs_block_devices" {
   description = "A list of maps that contains 3 keys: device name, volume size, and volume type"
-  type        = list(map(string))
-  default     = []
+  type = list(object({
+    device_name = string
+    volume_size = number
+    volume_type = string
+  }))
+  default = []
 }
 
 variable "ebs_volumes" {
