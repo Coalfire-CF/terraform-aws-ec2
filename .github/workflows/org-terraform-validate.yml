@@ -1,11 +1,41 @@
 name: Org Terraform Validate
 on:
-    pull_request:
-        types:
-        - opened
+  push:
+    branches:
+      - '**'
 
+  pull_request:
+    branches:
+    - '**'
+
+# First determine if we're in a private repo
 jobs:
-  create-release:
-    uses: Coalfire-CF/Actions/.github/workflows/org-terraform-validate.yml@main
+  check-visibility:
+    runs-on: ubuntu-latest
+    outputs:
+      is_private: ${{ steps.check.outputs.is_private }}
+    steps:
+      - id: check
+        run: |
+          REPO_VISIBILITY=$(curl -s -H "Authorization: token ${{ github.token }}" \
+          "https://api.github.com/repos/${{ github.repository }}" | jq -r '.private')
+          echo "is_private=$REPO_VISIBILITY" >> $GITHUB_OUTPUT
+
+  # Only run this job if we're in a private repo
+  private-validation:
+    needs: check-visibility
+    if: needs.check-visibility.outputs.is_private == 'true'
+    uses: Coalfire-CF/Actions/.github/workflows/org-terraform-validate.yml@26244cc890299238dcd63dc69dc1499e610d5966
     with:
-      terraform_version: '1.9.5'
+      terraform_version: 1.11.4
+    secrets:
+      APP_CLIENT_ID: ${{ secrets.CF_TF_PULL_PRIVATE_APP_CLIENTID }}
+      APP_PRIVATE_KEY: ${{ secrets.CF_TF_PULL_PRIVATE_APP_PRIVATE_KEY }}
+      
+  # Run this job if we're in a public repo (no secrets passed)
+  public-validation:
+    needs: check-visibility
+    if: needs.check-visibility.outputs.is_private != 'true'
+    uses: Coalfire-CF/Actions/.github/workflows/org-terraform-validate.yml@26244cc890299238dcd63dc69dc1499e610d5966
+    with:
+      terraform_version: 1.11.4
