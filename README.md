@@ -1,14 +1,43 @@
 ![Coalfire](coalfire_logo.png)
 
-# AWS EC2 Terraform Module
+# terraform-aws-ec2
 
 ## Description
 
-The EC2 general purpose module creates an EC2 instance for your project. Configuration for the EC2 instance includes networking, storage, IAM, and tags.
+Terraform module for provisioning and managing AWS EC2 instances with best practices for security, networking, storage, and IAM. It enables teams to deploy EC2 instances with configurable options for VPC/subnet placement, EBS encryption, security group management, IAM roles and policies, and tagging. The module supports advanced features such as multiple ENIs, additional EBS volumes, and user data scripts.
 
-### Multiple ENIs
+## Architecture
 
-In order to assign multiple ENIs to a single instance using this module, the "instance_count" variable must be set to 1.
+[architecture diagram to come]
+
+## Dependencies
+
+This module depends on:
+- VPC and subnet infrastructure
+- KMS keys for EBS encryption
+- IAM policies (if using custom policies)
+- Security groups (if using existing ones)
+
+Link to dependency modules:
+- [terraform-aws-securitygroup](https://github.com/Coalfire-CF/terraform-aws-securitygroup)
+
+## Environment Setup
+
+Include the required steps to establish a secure connection to the AWS environment:
+
+- Download and install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- Log into the AWS Console and [create AWS CLI Credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
+- Configure the named profile used for the project, such as `aws configure --profile example-mgmt`
+
+## Tree
+```
+.
+|-- CONTRIBUTING.md
+|-- License.md
+|-- README.md
+|-- coalfire_logo.png
+|-- update-readme-tree.sh
+```
 
 ## Resource List
 
@@ -22,14 +51,84 @@ Resources that are created as a part of this module include:
 - KMS RBAC grant
 - AWS security group
 - Target group attachment
+- EBS volumes (root and additional)
+- Security group rules
 
-## Setup and Usage
+## Code Updates
 
-This is an example of how to create an EC2 instance using this module, with generic variables.
+`required_providers.tf` Update to the appropriate version and storage accounts:
+
+```hcl
+terraform {
+  required_version = ">=1.5"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.15.0, < 6.0"
+    }
+  }
+}
+```
+
+## Deployment
+
+This section details how to deploy EC2 instances using this module:
+
+1. Navigate to the Terraform project and create a parent directory in the upper level code, for example:
+
+    ```hcl
+    ../aws/terraform/{REGION}/management-account/ec2-instance
+    ```
+
+   If multi-account management plane:
+
+    ```hcl
+    ../aws/terraform/{REGION}/{ACCOUNT_TYPE}-mgmt-account/ec2-instance
+    ```
+
+2. Create a properly defined main.tf file via the template found under 'Usage' while adjusting tfvars as needed. Note that many provided variables are outputs from other modules. Example parent directory:
+
+   ```hcl
+   ├── ec2-instance/
+   │   ├── backends/
+   │   │   ├── prefix.tfvars
+   │   ├── tfvars/
+   │   │   ├── prefix.tfvars
+   │   ├── userdata/
+   │   │   ├── ud-os-join-ad.sh
+   │   ├── data.tf
+   │   ├── locals.tf
+   │   ├── main.tf
+   │   ├── outputs.tf
+   │   ├── providers.tf
+   │   ├── README.md
+   │   ├── remote-data.tf
+   │   ├── required-providers.tf
+   │   ├── userdata.tf
+   │   ├── tstate.tf
+   │   ├── variables.tf
+   ```
+
+3. Initialize the Terraform working directory:
+   ```hcl
+   terraform init -backend-config=./backends/prefix.tfvars
+   ```
+   Create an execution plan and verify everything looks correct:
+   ```hcl
+   terraform plan
+   ```
+   Apply the configuration:
+   ```hcl
+   terraform apply -var-file=./tfvars/prefix.tfvars
+   ```
+
+## Usage
+
+### Basic EC2 Instance
 
 ```hcl
 module "ec2_test" {
-  source = "github.com/Coalfire-CF/terraform-aws-ec2"
+  source = "github.com/Coalfire-CF/terraform-aws-ec2?ref=v1.0.0"
 
   name = var.instance_name
 
@@ -47,7 +146,7 @@ module "ec2_test" {
   root_volume_size = var.instance_volume_size
 
   # Security Group Rules
-    ingress_rules = {
+  ingress_rules = {
     "rdp" = {
       ip_protocol = "tcp"
       from_port   = "3389"
@@ -68,100 +167,77 @@ module "ec2_test" {
   }
 
   # Tagging
-  global_tags = {}
+  global_tags = var.global_tags
 }
 ```
 
-### User Data
+### Advanced Configuration Examples
 
-```hcl-terraform
-  user_data = templatefile("${path.module}/../../shellscripts/linux/ud-os-join-ad.sh", {
-    aws_region            = var.aws_region
-    domain_name           = local.domain_name
-    dom_disname           = local.dom_disname
-    ou_env                = var.lin_prod_ou_env
-    linux_admins_ad_group = var.linux_admins_ad_group
-    domain_join_user_name = var.domain_join_user_name
-    sm_djuser_path        = "${var.ad_secrets_path}${var.domain_join_user_name}"
-    is_asg                = "false"
-  })
+#### User Data
+
+```hcl
+user_data = templatefile("${path.module}/../../shellscripts/linux/ud-os-join-ad.sh", {
+  aws_region            = var.aws_region
+  domain_name           = local.domain_name
+  dom_disname           = local.dom_disname
+  ou_env                = var.lin_prod_ou_env
+  linux_admins_ad_group = var.linux_admins_ad_group
+  domain_join_user_name = var.domain_join_user_name
+  sm_djuser_path        = "${var.ad_secrets_path}${var.domain_join_user_name}"
+  is_asg                = "false"
+})
 ```
 
-### Security Groups
-Ingress Rules:
-```hcl-terraform
-ingress_rules = {
-    "rdp" = {
-      ip_protocol = "tcp"
-      from_port   = "3389"
-      to_port     = "3389"
-      cidr_ipv4   = var.cidr_for_remote_access
-      description = "RDP"
-    }
-  }
-```
+#### Multiple EBS Volumes
 
-Egress Rules:
-```hcl-terraform
-egress_rules = {
-    "allow_all_egress" = {
-      ip_protocol = "-1"
-      from_port   = "0"
-      to_port     = "0"
-      cidr_ipv4   = "0.0.0.0/0"
-      description = "Allow all egress"
-    }
-  }
-```
-
-### IAM
-
-```hcl-terraform
-iam_policies      = [aws_iam_policy.test_policy_1.arn, ...]
-
-```
-
-### Multiple EBS Volumes
-
-The root ebs volume is handled with the below variables:
-
-However, if additional ebs volumes are required, you can use the below variable:
-
-```hcl-terraform
+```hcl
 ebs_block_devices = [
-    {
-      device_name = "/dev/sdf"
-      volume_size = "50"
-      volume_type = "gp2"
-    },
-    ...
-  ]
-
+  {
+    device_name = "/dev/sdf"
+    volume_size = "50"
+    volume_type = "gp2"
+  }
+]
 ```
 
-### Attaching Security Groups or IAM Profile from other instances
+#### Multiple ENIs
+*Note: In order to assign multiple ENIs to a single instance using this module, the "instance_count" variable must be set to 1.*
 
-The module also supports attaching a security group or IAM Profile from another instance within the same directory.  Let's take an example:
-AD1 creates a security group that can be used by both AD1 and AD2.  So, the AD2 module should use the output of the AD1 module to assign the existing security group.  Note, AD2 would now have a dependency on AD1.
-As shown below, the "additional_security_groups" variable can be used for this purpose.
+```hcl
+additional_eni_ids = [aws_network_interface.additional_eni.id]
+```
 
- ```hcl-terraform
+#### IAM Policies
+
+```hcl
+iam_policies = [aws_iam_policy.test_policy_1.arn]
+```
+
+#### Attaching Existing Security Groups or IAM Profile
+
+```hcl
 module "ad2" {
   source = "github.com/Coalfire-CF/terraform-aws-ec2"
+  
   name              = "dc2"
   ami               = "ami-XXXXXX"
   ec2_instance_type = "m5a.large"
   ec2_key_pair      = var.key_name
   root_volume_size  = "50"
-  subnet_ids        = [data.terraform_remote_state.network-mgmt.outputs.private_subnets[X]]
+  subnet_ids        = [data.terraform_remote_state.network-mgmt.outputs.private_subnets[0]]
   vpc_id            = data.terraform_remote_state.network-mgmt.outputs.vpc_id
-  private_ip = "${var.ip_network_mgmt}.${var.directory_ip_2}"
-
+  private_ip        = "${var.ip_network_mgmt}.${var.directory_ip_2}"
 
   iam_profile = module.ad1.iam_profile
   additional_security_groups = [module.ad1.sg_id]
+  
+  global_tags = var.global_tags
 }
 ```
+
+## Post Deployment Configuration
+
+*Include the corresponding post deployment confluence page if applicable.*
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -271,6 +347,10 @@ If you're interested in contributing to our projects, please review the [Contrib
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit/)
 
+## Contact Us
+
+[Coalfire](https://coalfire.com/)
+
 ### Copyright
 
-Copyright © 2023 Coalfire Systems Inc.
+Copyright © 2025 Coalfire Systems Inc.
