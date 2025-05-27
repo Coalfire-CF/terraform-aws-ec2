@@ -30,13 +30,35 @@ Include the required steps to establish a secure connection to the AWS environme
 - Configure the named profile used for the project, such as `aws configure --profile example-mgmt`
 
 ## Tree
+
 ```
 .
-|-- CONTRIBUTING.md
-|-- License.md
-|-- README.md
-|-- coalfire_logo.png
-|-- update-readme-tree.sh
+├── CONTRIBUTING.md
+├── README.md
+├── coalfire_logo.png
+├── ebs.tf
+├── ec2.tf
+├── eip.tf
+├── enis.tf
+├── examples
+│   └── simple
+│       ├── README.md
+│       ├── keys.tf
+│       ├── main.tf
+│       ├── providers.tf
+│       ├── tfvars
+│       │   └── example.tfvars
+│       ├── userdata
+│       │   └── ud-os-join-ad.sh
+│       └── variables.tf
+├── iam.tf
+├── locals.tf
+├── outputs.tf
+├── required_providers.tf
+├── sg.tf
+├── target_group_attachment.tf
+└── variables.tf
+
 ```
 
 ## Resource List
