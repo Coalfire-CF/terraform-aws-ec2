@@ -17,36 +17,36 @@ The following modules or resources should be created prior to deploying this mod
 
 
 ## Tree
+
 ```
 .
-|-- .gitignore
-|-- .terraform.lock.hcl
-|-- coalfire_logo.png
-|-- CONTRIBUTING.md
-|-- ebs.tf
-|-- ec2.tf
-|-- eip.tf
-|-- enis.tf
-|-- iam.tf
-|-- locals.tf
-|-- outputs.tf
-|-- providers.tf
-|-- README.md
-|-- required_providers.tf
-|-- sg.tf
-|-- target_group_attachment.tf
-|-- variables.tf
-|-- examples/
-|   |-- simple/
-|       |-- keys.tf
-|       |-- main.tf
-|       |-- providers.tf
-|       |-- README.md
-|       |-- userdata/
-|           |-- ud-os-join-ad.sh
-|       |-- variables.tf
-```
+├── CONTRIBUTING.md
+├── README.md
+├── coalfire_logo.png
+├── ebs.tf
+├── ec2.tf
+├── eip.tf
+├── enis.tf
+├── examples
+│   ├── data.tf
+│   ├── example.auto.tfvars
+│   ├── locals.tf
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── providers.tf
+│   ├── required-providers.tf
+│   ├── userdata
+│   │   └── ud-os-join-ad.sh
+│   └── variables.tf
+├── iam.tf
+├── locals.tf
+├── outputs.tf
+├── required_providers.tf
+├── sg.tf
+├── target_group_attachment.tf
+└── variables.tf
 
+```
 
 ## Resource List
 
