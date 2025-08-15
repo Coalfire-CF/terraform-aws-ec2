@@ -7,7 +7,7 @@ provider "aws" {
   default_tags {
     tags = {
       Application = "This is a test"
-      Owner       = "Eric Nguyen"
+      Owner       = "Coalfire"
       Team        = "AWS Native Architecture PAK Team"
       Environment = "dev"
     }
