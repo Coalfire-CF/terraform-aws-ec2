@@ -1,0 +1,14 @@
+instance_size         = "t3.micro"
+instance_volume_size  = "50"
+key_name              = "access-key"
+instance_name         = "pak-test"
+root_volume_size      = 50
+profile               = "govsandbox"
+instance_count        = 1
+aws_region            = "us-gov-west-1"
+prod_ou_env           = "OU=Prod,DC=corp,DC=coalfire,DC=com"
+admins_ad_group       = "Admins"
+domain_join_user_name = "svc_dj"
+ad_secrets_path       = "/production/mgmt/ad/svc_dj"
+domain_name           = "corp.coalfire.com"
+dom_disname           = "dc=corp,dc=coalfire,dc=com"
