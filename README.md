@@ -1,35 +1,71 @@
+
 ![Coalfire](coalfire_logo.png)
 
-# AWS EC2 Terraform Module
+# terraform-aws-ec2
 
 ## Description
 
-The EC2 general purpose module creates an EC2 instance for your project. Configuration for the EC2 instance includes networking, storage, IAM, and tags.
+The EC2 module provisions one or more AWS EC2 instances with flexible configuration for networking, storage, IAM, tagging, security groups, and load balancer target group attachments. It supports single or multiple instances, multiple ENIs, custom EBS volumes, and integration with existing IAM profiles and security groups.
 
-### Multiple ENIs
+## Dependencies
 
-In order to assign multiple ENIs to a single instance using this module, the "instance_count" variable must be set to 1.
+The following modules or resources should be created prior to deploying this module:
+
+- [terraform-aws-vpc-nfw](https://github.com/Coalfire-CF/terraform-aws-vpc-nfw) (for VPC and subnets)
+- [terraform-aws-account-setup](https://github.com/Coalfire-CF/terraform-aws-account-setup) (for IAM roles/profiles and KMS key)
+- Any security groups or IAM policies you wish to attach
+
+
+## Tree
+
+```
+.
+├── CONTRIBUTING.md
+├── README.md
+├── coalfire_logo.png
+├── ebs.tf
+├── ec2.tf
+├── eip.tf
+├── enis.tf
+├── examples
+│   ├── data.tf
+│   ├── example.auto.tfvars
+│   ├── locals.tf
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── providers.tf
+│   ├── required-providers.tf
+│   ├── userdata
+│   │   └── ud-os-join-ad.sh
+│   └── variables.tf
+├── iam.tf
+├── locals.tf
+├── outputs.tf
+├── required_providers.tf
+├── sg.tf
+├── target_group_attachment.tf
+└── variables.tf
+
+```
 
 ## Resource List
 
-Resources that are created as a part of this module include:
+- EC2 instance(s)
+- Elastic IP (optional)
+- Network interface attachment (optional)
+- IAM role and instance profile (optional)
+- KMS grant for EBS encryption (optional)
+- Security group (optional)
+- Target group attachment (optional)
+- EBS volumes and attachments (optional)
 
-- EC2 instance
-- Elastic IP
-- Network interface attachment
-- IAM role
-- IAM instance profile
-- KMS RBAC grant
-- AWS security group
-- Target group attachment
 
-## Setup and Usage
-
+## Usage
 This is an example of how to create an EC2 instance using this module, with generic variables.
 
 ```hcl
 module "ec2_test" {
-  source = "github.com/Coalfire-CF/terraform-aws-ec2"
+  source = "github.com/Coalfire-CF/terraform-aws-ec2?ref=vX.X.X"
 
   name = var.instance_name
 
@@ -147,7 +183,7 @@ As shown below, the "additional_security_groups" variable can be used for this p
 
  ```hcl-terraform
 module "ad2" {
-  source = "github.com/Coalfire-CF/terraform-aws-ec2"
+  source = "github.com/Coalfire-CF/terraform-aws-ec2?ref=vX.X.X"
   name              = "dc2"
   ami               = "ami-XXXXXX"
   ec2_instance_type = "m5a.large"
@@ -162,6 +198,98 @@ module "ad2" {
   additional_security_groups = [module.ad1.sg_id]
 }
 ```
+See the [examples/simple](examples/simple/README.md) directory for a full working example.
+
+
+## Environment Setup
+
+IAM user authentication:
+
+- Download and install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- Log into the AWS Console and create AWS CLI Credentials ([guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html))
+- Configure the named profile used for the project, e.g. `aws configure --profile example-mgmt`
+
+SSO-based authentication (via IAM Identity Center SSO):
+
+- Login to the AWS IAM Identity Center console, select the permission set for MGMT, and select the 'Access Keys' link.
+- Choose the 'IAM Identity Center credentials' method to get the SSO Start URL and SSO Region values.
+- Run `aws configure sso --profile example-mgmt` and follow the prompts.
+- Verify you can run AWS commands successfully, e.g. `aws s3 ls --profile example-mgmt`.
+- Run `export AWS_PROFILE=example-mgmt` in your terminal to use the specific profile and avoid having to use `--profile` option.
+
+## Deployment
+
+1. Navigate to the Terraform project and create a parent directory in the upper level code, for example:
+
+  ```hcl
+  ../aws/terraform/{REGION}/management-account/example
+  ```
+
+  If multi-account management plane:
+
+  ```hcl
+  ../aws/terraform/{REGION}/{ACCOUNT_TYPE}-mgmt-account/example
+  ```
+
+
+1. Create a new branch. The branch name should provide a high level overview of what you're working on.
+
+1. Create a properly defined main.tf file via the template found under 'Usage' while adjusting tfvars as needed. Example parent directory:
+
+  ```hcl
+  ├── Example/
+  │   ├── prefix.auto.tfvars
+  │   ├── data.tf
+  │   ├── locals.tf
+  │   ├── main.tf
+  │   ├── outputs.tf
+  │   ├── providers.tf
+  │   ├── README.md
+  │   ├── tstate.tf
+  │   ├── variables.tf
+  │   ├── ...
+  ```
+
+1. Change directories to the `terraform-aws-ec2` directory.
+
+1. Ensure that the `prefix.auto.tfvars` variables are correct (especially the profile) or create a new tfvars file with the correct variables.
+
+1. Customize code to meet requirements, e.g. add/remove inbound rules, add/remove outbound rules.
+
+1. From the `terraform-aws-ec2` directory, initialize the Terraform working directory:
+
+  ```hcl
+  terraform init
+  ```
+
+
+1. Standardized formatting in code:
+
+  ```hcl
+  terraform fmt
+  ```
+
+
+1. Optional: Ensure proper syntax and "spell check" your code:
+
+  ```hcl
+  terraform validate
+  ```
+
+
+1. Create an execution plan and verify everything looks correct:
+
+   ```hcl
+   terraform plan
+   ```
+
+
+1. Apply the configuration:
+
+   ```hcl
+   terraform apply
+   ```
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -265,12 +393,16 @@ module "ad2" {
 
 ## Contributing
 
-If you're interested in contributing to our projects, please review the [Contributing Guidelines](CONTRIBUTING.md). And send an email to [our team](contributing@coalfire.com) to receive a copy of our CLA and start the onboarding process.
+[Start Here](CONTRIBUTING.md)
 
 ## License
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit/)
 
+## Contact Us
+
+[Coalfire](https://coalfire.com/)
+
 ### Copyright
 
-Copyright © 2023 Coalfire Systems Inc.
+© 2025 Coalfire Systems Inc.
