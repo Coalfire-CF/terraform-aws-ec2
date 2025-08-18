@@ -221,74 +221,41 @@ SSO-based authentication (via IAM Identity Center SSO):
 
 1. Navigate to the Terraform project and create a parent directory in the upper level code, for example:
 
-  ```hcl
-  ../aws/terraform/{REGION}/management-account/example
-  ```
+    ```hcl
+    ../{CLOUD}/terraform/{REGION}/management-account/example
+    ```
+   If multi-account management plane:
 
-  If multi-account management plane:
+    ```hcl
+    ../{CLOUD}/terraform/{REGION}/{ACCOUNT_TYPE}-mgmt-account/example
+    ```
 
-  ```hcl
-  ../aws/terraform/{REGION}/{ACCOUNT_TYPE}-mgmt-account/example
-  ```
+2. Create a properly defined main.tf file via the template found under 'Usage' while adjusting tfvars as needed. Note that many provided variables are outputs from other modules. Example parent directory:
 
-
-1. Create a new branch. The branch name should provide a high level overview of what you're working on.
-
-1. Create a properly defined main.tf file via the template found under 'Usage' while adjusting tfvars as needed. Example parent directory:
-
-  ```hcl
-  ├── Example/
-  │   ├── prefix.auto.tfvars
-  │   ├── data.tf
-  │   ├── locals.tf
-  │   ├── main.tf
-  │   ├── outputs.tf
-  │   ├── providers.tf
-  │   ├── README.md
-  │   ├── tstate.tf
-  │   ├── variables.tf
-  │   ├── ...
-  ```
-
-1. Change directories to the `terraform-aws-ec2` directory.
-
-1. Ensure that the `prefix.auto.tfvars` variables are correct (especially the profile) or create a new tfvars file with the correct variables.
-
-1. Customize code to meet requirements, e.g. add/remove inbound rules, add/remove outbound rules.
-
-1. From the `terraform-aws-ec2` directory, initialize the Terraform working directory:
-
-  ```hcl
-  terraform init
-  ```
-
-
-1. Standardized formatting in code:
-
-  ```hcl
-  terraform fmt
-  ```
-
-
-1. Optional: Ensure proper syntax and "spell check" your code:
-
-  ```hcl
-  terraform validate
-  ```
-
-
-1. Create an execution plan and verify everything looks correct:
-
-   ```hcl
-   terraform plan
-   ```
-
-
-1. Apply the configuration:
-
-   ```hcl
-   terraform apply
-   ```
+    ```hcl
+     ├── Example/
+     │   ├── example.auto.tfvars   
+     │   ├── main.tf
+     │   ├── outputs.tf
+     │   ├── providers.tf
+     │   ├── required-providers.tf
+     │   ├── remote-data.tf
+     │   ├── variables.tf 
+     │   ├── ...
+     ```
+   
+4. Initialize the Terraform working directory:
+    ```hcl
+    terraform init
+    ```
+    Create an execution plan and verify the resources being created:
+    ```hcl
+    terraform plan
+    ```
+    Apply the configuration:
+    ```hcl
+    terraform apply
+    ```
 
 
 <!-- BEGIN_TF_DOCS -->
