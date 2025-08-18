@@ -21,6 +21,7 @@ The following modules or resources should be created prior to deploying this mod
 ```
 .
 ├── CONTRIBUTING.md
+├── License.md
 ├── README.md
 ├── coalfire_logo.png
 ├── ebs.tf
@@ -44,6 +45,7 @@ The following modules or resources should be created prior to deploying this mod
 ├── required_providers.tf
 ├── sg.tf
 ├── target_group_attachment.tf
+├── update-readme-tree.sh
 └── variables.tf
 
 ```
