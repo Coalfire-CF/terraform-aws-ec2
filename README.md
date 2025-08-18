@@ -200,97 +200,75 @@ module "ad2" {
   additional_security_groups = [module.ad1.sg_id]
 }
 ```
-See the [examples/simple](examples/simple/README.md) directory for a full working example.
 
 
 ## Environment Setup
 
+Establish a secure connection to the Management AWS account used for the build:
+
+```hcl
 IAM user authentication:
 
-- Download and install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-- Log into the AWS Console and create AWS CLI Credentials ([guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html))
-- Configure the named profile used for the project, e.g. `aws configure --profile example-mgmt`
+- Download and install the AWS CLI (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- Log into the AWS Console and create AWS CLI Credentials (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
+- Configure the named profile used for the project, such as 'aws configure --profile example-mgmt'
 
 SSO-based authentication (via IAM Identity Center SSO):
 
 - Login to the AWS IAM Identity Center console, select the permission set for MGMT, and select the 'Access Keys' link.
 - Choose the 'IAM Identity Center credentials' method to get the SSO Start URL and SSO Region values.
-- Run `aws configure sso --profile example-mgmt` and follow the prompts.
-- Verify you can run AWS commands successfully, e.g. `aws s3 ls --profile example-mgmt`.
-- Run `export AWS_PROFILE=example-mgmt` in your terminal to use the specific profile and avoid having to use `--profile` option.
+- Run the setup command 'aws configure sso --profile example-mgmt' and follow the prompts.
+- Verify you can run AWS commands successfully, for example 'aws s3 ls --profile example-mgmt'.
+- Run 'export AWS_PROFILE=example-mgmt' in your terminal to use the specific profile and avoid having to use '--profile' option.
+```
+
 
 ## Deployment
 
 1. Navigate to the Terraform project and create a parent directory in the upper level code, for example:
 
-  ```hcl
-  ../aws/terraform/{REGION}/management-account/example
-  ```
+    ```hcl
+    ../{CLOUD}/terraform/{REGION}/management-account/example
+    ```
+   If multi-account management plane:
 
-  If multi-account management plane:
+    ```hcl
+    ../{CLOUD}/terraform/{REGION}/{ACCOUNT_TYPE}-mgmt-account/example
+    ```
 
-  ```hcl
-  ../aws/terraform/{REGION}/{ACCOUNT_TYPE}-mgmt-account/example
-  ```
+2. Create a properly defined main.tf file via the template found under 'Usage' while adjusting tfvars as needed. Note that many provided variables are outputs from other modules. Example parent directory:
 
-
-1. Create a new branch. The branch name should provide a high level overview of what you're working on.
-
-1. Create a properly defined main.tf file via the template found under 'Usage' while adjusting tfvars as needed. Example parent directory:
-
-  ```hcl
-  ├── Example/
-  │   ├── prefix.auto.tfvars
-  │   ├── data.tf
-  │   ├── locals.tf
-  │   ├── main.tf
-  │   ├── outputs.tf
-  │   ├── providers.tf
-  │   ├── README.md
-  │   ├── tstate.tf
-  │   ├── variables.tf
-  │   ├── ...
-  ```
-
-1. Change directories to the `terraform-aws-ec2` directory.
-
-1. Ensure that the `prefix.auto.tfvars` variables are correct (especially the profile) or create a new tfvars file with the correct variables.
-
-1. Customize code to meet requirements, e.g. add/remove inbound rules, add/remove outbound rules.
-
-1. From the `terraform-aws-ec2` directory, initialize the Terraform working directory:
-
-  ```hcl
-  terraform init
-  ```
+      ```hcl
+    ├── Example/
+    │   ├── example.auto.tfvars   
+    │   ├── main.tf
+    │   ├── outputs.tf
+    │   ├── providers.tf
+    │   ├── required-providers.tf
+    │   ├── remote-data.tf
+    │   ├── variables.tf 
+    │   ├── ...
+      ```
 
 
-1. Standardized formatting in code:
+3. Change directories to the terraform-aws-ec2 directory.
 
-  ```hcl
-  terraform fmt
-  ```
+    Ensure that the example.auto.tfvars variables are correct (especially the profile)
 
-
-1. Optional: Ensure proper syntax and "spell check" your code:
-
-  ```hcl
-  terraform validate
-  ```
-
-
-1. Create an execution plan and verify everything looks correct:
-
-   ```hcl
-   terraform plan
-   ```
-
-
-1. Apply the configuration:
-
-   ```hcl
-   terraform apply
-   ```
+    Customize code to meet requirements, e.g. add/remove inbound rules, add/remove outbound rules.
+   
+4. Initialize the Terraform working directory:
+    ```hcl
+    terraform init
+    ```
+    Create an execution plan and verify the resources being created:
+    ```hcl
+    terraform plan
+    ```
+    Apply the configuration:
+    ```hcl
+    terraform apply
+    ```
 
 
 <!-- BEGIN_TF_DOCS -->
