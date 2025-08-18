@@ -5,13 +5,13 @@
 #${domain_name} - Domain Name: example.com
 #${dom_disname} - dc=local,dc=fastramp,dc=internal
 #${ou_env} - OU=Linux,OU=Production,OU=Management,OU=Servers
-#${linux_admins_ad_group} - linuxadmins
+## ${admins_ad_group} - linuxadmins
 #${domain_join_user_name} - svc_dj
 #${sm_djuser_path} - /production/mgmt/ad/svc_dj
 
 set -o nounset
 
-linux_admins_ad_group=${linux_admins_ad_group}
+admins_ad_group=${admins_ad_group}
 
 # Get IMDSv2 token
 TOKEN=$(curl -X PUT 'http://169.254.169.254/latest/api/token' -H 'X-aws-ec2-metadata-token-ttl-seconds: 21600')
@@ -57,7 +57,7 @@ sm_fips_endpoint="https://secretsmanager-fips.${aws_region}.amazonaws.com"
 # Use realm to join the AD domain.
 for i in {1..10}
 do
-  echo `aws secretsmanager get-secret-value --secret-id "${sm_djuser_path}" --region ${aws_region} --endpoint-url $sm_fips_endpoint | jq -r '.SecretString'`| realm join --membership-software=adcli --user=${domain_join_user_name} ${domain_name} --computer-ou="${ou_env},${dom_disname}"
+  echo `aws secretsmanager get-secret-value --secret-id "${sm_djuser_path}" --region ${aws_region} --endpoint-url $sm_fips_endpoint | jq -r '.SecretString'`| realm join --membership-software=adcli --user=${domain_join_user_name} ${domain_name} --computer-ou="${prod_ou_env},${dom_disname}"
   if [[ ! -z "$(realm list)" ]];
   then
     echo "Realm joined successfully!"
@@ -108,11 +108,11 @@ sed -i -e 's/#PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/s
 sed -i -e 's/GSSAPIAuthentication yes/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 sed -i -e 's/#GSSAPIAuthentication no/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 
-# Allow the windows AD group to log in
-realm permit -g ${linux_admins_ad_group}@${domain_name}
+## Allow the windows AD group to log in
+realm permit -g ${admins_ad_group}@${domain_name}
 
 # Allow windows group permissions
-echo "%$linux_admins_ad_group    ALL=(ALL)       ALL" | tee -a /etc/sudoers > /dev/null
+echo "%$admins_ad_group    ALL=(ALL)       ALL" | tee -a /etc/sudoers > /dev/null
 
 # Reload sshd config.
 systemctl reload sshd
