@@ -198,24 +198,28 @@ module "ad2" {
   additional_security_groups = [module.ad1.sg_id]
 }
 ```
-See the [examples/simple](examples/simple/README.md) directory for a full working example.
 
 
 ## Environment Setup
 
+Establish a secure connection to the Management AWS account used for the build:
+
+```hcl
 IAM user authentication:
 
-- Download and install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-- Log into the AWS Console and create AWS CLI Credentials ([guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html))
-- Configure the named profile used for the project, e.g. `aws configure --profile example-mgmt`
+- Download and install the AWS CLI (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- Log into the AWS Console and create AWS CLI Credentials (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
+- Configure the named profile used for the project, such as 'aws configure --profile example-mgmt'
 
 SSO-based authentication (via IAM Identity Center SSO):
 
 - Login to the AWS IAM Identity Center console, select the permission set for MGMT, and select the 'Access Keys' link.
 - Choose the 'IAM Identity Center credentials' method to get the SSO Start URL and SSO Region values.
-- Run `aws configure sso --profile example-mgmt` and follow the prompts.
-- Verify you can run AWS commands successfully, e.g. `aws s3 ls --profile example-mgmt`.
-- Run `export AWS_PROFILE=example-mgmt` in your terminal to use the specific profile and avoid having to use `--profile` option.
+- Run the setup command 'aws configure sso --profile example-mgmt' and follow the prompts.
+- Verify you can run AWS commands successfully, for example 'aws s3 ls --profile example-mgmt'.
+- Run 'export AWS_PROFILE=example-mgmt' in your terminal to use the specific profile and avoid having to use '--profile' option.
+```
+
 
 ## Deployment
 
@@ -232,17 +236,24 @@ SSO-based authentication (via IAM Identity Center SSO):
 
 2. Create a properly defined main.tf file via the template found under 'Usage' while adjusting tfvars as needed. Note that many provided variables are outputs from other modules. Example parent directory:
 
-    ```hcl
-     ├── Example/
-     │   ├── example.auto.tfvars   
-     │   ├── main.tf
-     │   ├── outputs.tf
-     │   ├── providers.tf
-     │   ├── required-providers.tf
-     │   ├── remote-data.tf
-     │   ├── variables.tf 
-     │   ├── ...
-     ```
+      ```hcl
+    ├── Example/
+    │   ├── example.auto.tfvars   
+    │   ├── main.tf
+    │   ├── outputs.tf
+    │   ├── providers.tf
+    │   ├── required-providers.tf
+    │   ├── remote-data.tf
+    │   ├── variables.tf 
+    │   ├── ...
+      ```
+
+
+3. Change directories to the terraform-aws-ec2 directory.
+
+    Ensure that the example.auto.tfvars variables are correct (especially the profile)
+
+    Customize code to meet requirements, e.g. add/remove inbound rules, add/remove outbound rules.
    
 4. Initialize the Terraform working directory:
     ```hcl
