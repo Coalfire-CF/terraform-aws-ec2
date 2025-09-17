@@ -42,6 +42,7 @@ The following modules or resources should be created prior to deploying this mod
 ├── iam.tf
 ├── locals.tf
 ├── outputs.tf
+├── release-please-config.json
 ├── required_providers.tf
 ├── sg.tf
 ├── target_group_attachment.tf
