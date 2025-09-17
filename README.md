@@ -290,7 +290,7 @@ SSO-based authentication (via IAM Identity Center SSO):
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | github.com/Coalfire-CF/terraform-aws-securitygroup | v1.0.1 |
+| <a name="module_security_group"></a> [security\_group](#module\_security\_group) | git::https://github.com/Coalfire-CF/terraform-aws-securitygroup | v1.0.1 |
 
 ## Resources
 
