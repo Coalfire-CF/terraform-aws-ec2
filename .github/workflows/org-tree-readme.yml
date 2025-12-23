@@ -1,6 +1,11 @@
-name: Check README on push
+name: Update README Tree on PR
 
-on: [push, pull_request]
+on:
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   readme-tree-writer:
