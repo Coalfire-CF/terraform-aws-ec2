@@ -17,40 +17,38 @@ The following modules or resources should be created prior to deploying this mod
 
 
 ## Tree
-
 ```
 .
-├── CONTRIBUTING.md
-├── License.md
-├── README.md
-├── coalfire_logo.png
-├── ebs.tf
-├── ec2.tf
-├── eip.tf
-├── enis.tf
-├── examples
-│   ├── data.tf
-│   ├── example.auto.tfvars
-│   ├── locals.tf
-│   ├── main.tf
-│   ├── outputs.tf
-│   ├── providers.tf
-│   ├── required-providers.tf
-│   ├── userdata
-│   │   └── ud-os-join-ad.sh
-│   └── variables.tf
-├── iam.tf
-├── locals.tf
-├── outputs.tf
-├── release-please-config.json
-├── required_providers.tf
-├── sg.tf
-├── target_group_attachment.tf
-├── update-readme-tree.sh
-└── variables.tf
-
+|-- CONTRIBUTING.md
+|-- LICENSE
+|-- License.md
+|-- README.md
+|-- coalfire_logo.png
+|-- ebs.tf
+|-- ec2.tf
+|-- eip.tf
+|-- enis.tf
+|-- examples
+|   |-- data.tf
+|   |-- example.auto.tfvars
+|   |-- locals.tf
+|   |-- main.tf
+|   |-- outputs.tf
+|   |-- providers.tf
+|   |-- required-providers.tf
+|   |-- userdata
+|   |   |-- ud-os-join-ad.sh
+|   |-- variables.tf
+|-- iam.tf
+|-- locals.tf
+|-- outputs.tf
+|-- release-please-config.json
+|-- required_providers.tf
+|-- sg.tf
+|-- target_group_attachment.tf
+|-- update-readme-tree.sh
+|-- variables.tf
 ```
-
 ## Resource List
 
 - EC2 instance(s)
