@@ -20,10 +20,12 @@ resource "aws_ebs_volume" "this" {
       SkipDestroy                 = local.additional_ebs_volumes[count.index][1].skip_destroy
       StopInstanceBeforeDetaching = local.additional_ebs_volumes[count.index][1].stop_instance_before_detaching
       DeviceName                  = local.additional_ebs_volumes[count.index][1].device_name
-      backup_policy               = var.backup_policy
     },
     local.additional_ebs_volumes[count.index][1].tags,
-    var.global_tags
+    var.global_tags,
+    {
+      backup_policy = var.backup_policy
+    }
   )
 }
 

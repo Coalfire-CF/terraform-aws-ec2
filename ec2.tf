@@ -60,17 +60,18 @@ resource "aws_instance" "this" {
   ###  IAM  ###
   iam_instance_profile = local.iam_profile
 
-
   ###  TAGS  ###
   tags = merge(
     {
       Name          = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}",
       CNAME         = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}",
-      PatchGroup    = tostring(count.index % 2 + 1), # Default PatchGroup tag increments in range 1-2
-      backup_policy = var.backup_policy
+      PatchGroup    = tostring(count.index % 2 + 1) # Default PatchGroup tag increments in range 1-2
     },
     var.tags,
-    var.global_tags
+    var.global_tags,
+    {
+      backup_policy = var.backup_policy
+    }
   )
 
   volume_tags = merge(
@@ -78,7 +79,10 @@ resource "aws_instance" "this" {
       Name = var.instance_count == 1 ? var.name : "${var.name}${count.index + 1}"
     },
     var.tags,
-    var.global_tags
+    var.global_tags,
+    {
+      backup_policy = var.backup_policy
+    }
   )
 
   lifecycle {
