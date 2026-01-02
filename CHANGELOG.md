@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.1](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.0...v2.2.1) (2026-01-02)
+
+
+### Miscellaneous
+
+* **deps:** update hashicorp/aws requirement from &gt;= 5.15.0, &lt; 6.0 to &gt;= 5.15.0, &lt; 6.23 ([c08db18](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/c08db186598a9b253df668049ad7a6a691961def))
+* **deps:** update hashicorp/aws requirement from ~&gt; 5.0 to ~&gt; 6.27 in /examples ([1dd2f90](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/1dd2f90fa68728327cb9b335eb425a3040eb5ae0))
+
 ## [2.2.0](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.1.1...v2.2.0) (2026-01-02)
 
 
