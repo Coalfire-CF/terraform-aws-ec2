@@ -288,3 +288,9 @@ variable "volume_delete_on_termination" {
   type        = bool
   default     = false
 }
+
+variable "backup_policy" {
+  description = "Backup policy tag value for EC2 instances and EBS volumes"
+  type        = string
+  default     = "aws-backup-minimum-compliance"
+}
