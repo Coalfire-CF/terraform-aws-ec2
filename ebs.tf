@@ -22,7 +22,10 @@ resource "aws_ebs_volume" "this" {
       DeviceName                  = local.additional_ebs_volumes[count.index][1].device_name
     },
     local.additional_ebs_volumes[count.index][1].tags,
-    var.global_tags
+    var.global_tags,
+    {
+      backup_policy = var.backup_policy
+    }
   )
 }
 
