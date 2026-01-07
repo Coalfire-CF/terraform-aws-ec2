@@ -275,14 +275,14 @@ SSO-based authentication (via IAM Identity Center SSO):
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.15.0, < 6.23 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.10 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.15.0, < 6.23 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.0 |
 
 ## Modules
 
@@ -344,6 +344,7 @@ SSO-based authentication (via IAM Identity Center SSO):
 | <a name="input_name"></a> [name](#input\_name) | The name of the ec2 instance | `string` | n/a | yes |
 | <a name="input_private_ip"></a> [private\_ip](#input\_private\_ip) | Single private IP for a single instance | `string` | `null` | no |
 | <a name="input_private_ips"></a> [private\_ips](#input\_private\_ips) | List of private IPs for multiple instances | `list(string)` | `[]` | no |
+| <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | Prefix to be used for resource naming | `string` | n/a | yes |
 | <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | The size of the root ebs volume on the ec2 instances created | `string` | n/a | yes |
 | <a name="input_root_volume_type"></a> [root\_volume\_type](#input\_root\_volume\_type) | The type of the root ebs volume on the ec2 instances created | `string` | `"gp3"` | no |
 | <a name="input_sg_description"></a> [sg\_description](#input\_sg\_description) | This overwrites the default generated description for the security group | `string` | `"Managed by Terraform"` | no |
