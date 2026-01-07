@@ -9,6 +9,11 @@ variable "ami" {
   type        = string
 }
 
+variable "resource_prefix" {
+  description = "Prefix to be used for resource naming"
+  type        = string
+}
+
 variable "name" {
   description = "The name of the ec2 instance"
   type        = string
