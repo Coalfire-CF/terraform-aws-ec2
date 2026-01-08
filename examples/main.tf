@@ -1,5 +1,5 @@
 module "ec2_test" {
-  source = "git::https://github.com/Coalfire-CF/terraform-aws-ec2?ref=v2.2.0"
+  source = "git::https://github.com/Coalfire-CF/terraform-aws-ec2?ref=v2.2.2"
 
   name = var.instance_name
 
