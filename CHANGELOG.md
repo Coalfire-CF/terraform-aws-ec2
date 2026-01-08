@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.2](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.1...v2.2.2) (2026-01-08)
+
+
+### Bug Fixes
+
+* license year ([99c2cb4](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/99c2cb4e895f62bc66b6712247c870689a27715f))
+* update license year to 2026 ([8196ce2](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/8196ce2a351c4bdddf02fc8a05c0f9863c890a0b))
+
 ## [2.2.1](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.0...v2.2.1) (2026-01-07)
 
 
