@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.2.3](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.2...v2.2.3) (2026-01-09)
+
+
+### Bug Fixes
+
+* Updated codeowners file and req providers ([530c52f](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/530c52f66288a36f3f66571fb0f0b4d8c5aaa926))
+* Updated codeowners file and req providers ([4776a7b](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/4776a7b3acd2280412926a364e75475f8fbfcf00))
+
+
+### Miscellaneous
+
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-checkov.yml ([807a6d2](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/807a6d2cef46308f887f2f4ba335d9e0eff98a21))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-checkov.yml from 0.1.0 to 0.1.1 ([b5b63d1](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/b5b63d10d54553a98cdaab26fd9f2af9cddd8c89))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-docs.yml ([9c7a41e](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/9c7a41e87e9bbd78f2d40ed9b6f4d67d9e0bd296))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-docs.yml from 0.1.0 to 0.1.1 ([7cfe110](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/7cfe11091129f36216215c44d0205abdfdcae234))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-validate.yml ([1913145](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/19131459208843023e5758ef843f6e0d9a3ee21f))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-validate.yml from 0.1.0 to 0.1.1 ([40d7fa2](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/40d7fa2ab94a32b757f02b10e25c84517c246465))
+* **deps:** bump ec2_test::terraform-aws-ec2 from 2.2.0 to 2.2.2 in /examples ([ac0abde](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/ac0abde34cc9f384950d2604f2e2a6f3af7ca18a))
+* **deps:** bump ec2_test::terraform-aws-ec2 in /examples ([1c4c6a3](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/1c4c6a32d9d7bc22e35629a4ef1caa5197fe5bed))
+
 ## [2.2.2](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.1...v2.2.2) (2026-01-08)
 
 
