@@ -5,7 +5,7 @@ module "security_group" {
   name           = "${var.name}-sg"
   description    = var.sg_description
   vpc_id         = var.vpc_id
-  sg_name_prefix = var.resource_prefix
+  sg_name_prefix = "" #Leave as an empty string
 
   ingress_rules = length(var.ingress_rules) == 0 ? {} : var.ingress_rules
   egress_rules  = length(var.egress_rules) == 0 ? {} : var.egress_rules
