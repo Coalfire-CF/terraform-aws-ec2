@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.4](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.3...v2.2.4) (2026-01-13)
+
+
+### Miscellaneous
+
+* **deps:** bump ec2_test::terraform-aws-ec2 from 2.2.2 to 2.2.3 in /examples ([b0bf3a8](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/b0bf3a8dda05bde9ce04f923808cc64fe95f449b))
+* **deps:** bump ec2_test::terraform-aws-ec2 in /examples ([48c868d](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/48c868de877eff95babd2ad5725cc8200257b39e))
+
 ## [2.2.3](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.2...v2.2.3) (2026-01-09)
 
 
