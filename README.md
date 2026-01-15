@@ -19,6 +19,7 @@ The following modules or resources should be created prior to deploying this mod
 ## Tree
 ```
 .
+|-- CHANGELOG.md
 |-- CONTRIBUTING.md
 |-- LICENSE
 |-- License.md
@@ -35,7 +36,7 @@ The following modules or resources should be created prior to deploying this mod
 |   |-- main.tf
 |   |-- outputs.tf
 |   |-- providers.tf
-|   |-- required-providers.tf
+|   |-- required_providers.tf
 |   |-- userdata
 |   |   |-- ud-os-join-ad.sh
 |   |-- variables.tf
