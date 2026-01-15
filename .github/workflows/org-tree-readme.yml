@@ -8,21 +8,9 @@ permissions:
   pull-requests: write
 
 jobs:
-  readme-tree-writer:
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout the repository to the GitHub Actions runner
-      - uses: actions/checkout@v6
-      # creates tree structure of repo
-      - name: Write tree outputs to README
-        uses: shirakiya/readme-tree-writer@v1
-      # check diff of readme.md
-      - name: Commit if diff exists
-        run: |
-          if [ "$(git diff --ignore-space-at-eol . | wc -l)" -gt "0" ]; then
-            git config user.name github-actions
-            git config user.email github-actions@github.com
-            git add .
-            git commit -m "commit by shirakiya/readme-tree-writer"
-            git push
-          fi
+  readme-tree:
+    uses: Coalfire-CF/Actions/.github/workflows/org-tree-readme.yml@v0.1.0
+    with:
+      commit_message: "chore: update README tree"
+      exclude_pattern: ".git|node_modules|.github|dist|build"
+      working_directory: "."
