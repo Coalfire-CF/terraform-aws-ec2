@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.5](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.4...v2.2.5) (2026-01-17)
+
+
+### Miscellaneous
+
+* remove duplicate License.md file ([#116](https://github.com/Coalfire-CF/terraform-aws-ec2/issues/116)) ([2dea659](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/2dea659be8fd42ce2699e9e1d82950c3f8f5749b))
+* remove obsolete update-readme-tree.sh script ([#118](https://github.com/Coalfire-CF/terraform-aws-ec2/issues/118)) ([b4de052](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/b4de052239e33b1312b76138fa85f97d81d1e48d))
+
 ## [2.2.4](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.3...v2.2.4) (2026-01-13)
 
 
