@@ -86,7 +86,7 @@ resource "aws_instance" "this" {
   )
 
   lifecycle {
-    ignore_changes = [root_block_device, ebs_block_device, user_data, ami]
+    ignore_changes = [root_block_device, ebs_block_device, user_data, user_data_base64, ami]
     precondition {
       condition     = (data.aws_ec2_instance_type.this.ebs_optimized_support == "unsupported" && var.ebs_optimized == false) || (data.aws_ec2_instance_type.this.ebs_optimized_support == "supported" && var.ebs_optimized == true) || (data.aws_ec2_instance_type.this.ebs_optimized_support == "default" && var.ebs_optimized == true)
       error_message = <<-EOT
