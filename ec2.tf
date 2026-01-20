@@ -9,7 +9,7 @@ resource "aws_instance" "this" {
   count         = var.instance_count
   key_name      = var.ec2_key_pair
   monitoring    = true
-  #user_data                   = var.user_data
+  user_data                   = var.user_data
   user_data_base64            = base64encode(var.user_data) #user_data_base64            = var.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
   get_password_data           = var.get_password_data
