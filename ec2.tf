@@ -4,12 +4,12 @@ data "aws_ec2_instance_type" "this" {
 
 resource "aws_instance" "this" {
   ###  BASICS  ###
-  ami                         = var.ami
-  instance_type               = var.ec2_instance_type
-  count                       = var.instance_count
-  key_name                    = var.ec2_key_pair
-  monitoring                  = true
-  user_data                   = var.user_data
+  ami           = var.ami
+  instance_type = var.ec2_instance_type
+  count         = var.instance_count
+  key_name      = var.ec2_key_pair
+  monitoring    = true
+  #user_data                   = var.user_data
   user_data_base64            = var.user_data_base64
   user_data_replace_on_change = var.user_data_replace_on_change
   get_password_data           = var.get_password_data
