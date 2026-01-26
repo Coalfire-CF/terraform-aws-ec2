@@ -1,5 +1,34 @@
 # Changelog
 
+## [2.2.5](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.4...v2.2.5) (2026-01-26)
+
+
+### Bug Fixes
+
+* use correct CoalForge team slug ([a86ab48](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/a86ab481c10c661ab9ad5fd0bf8141b380b2bff3))
+
+
+### Miscellaneous
+
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-checkov.yml ([0a8bd92](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/0a8bd92161698e0042309f46a6f22332b9393c1b))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-checkov.yml from 0.1.1 to 0.2.1 ([f201e25](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/f201e2589297787d51d0f55514646487662c8ac2))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-dependabot.yml ([d7dcbe3](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/d7dcbe372d0115787cc3e7fe3947f7f79f9a664a))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-dependabot.yml ([#114](https://github.com/Coalfire-CF/terraform-aws-ec2/issues/114)) ([bfd7006](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/bfd70066680e99459dbe3cc0a3e8f47fd5666991))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-dependabot.yml from 0.2.0 to 0.2.1 ([a39b984](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/a39b98448a9bfe7b2e918f58d8078bf44fcd7a58))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-markdown-lint.yml ([16804ec](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/16804ec2b3de18089eda5145d947d022c66d4b23))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-markdown-lint.yml from 0.1.1 to 0.2.1 ([5ac31d7](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/5ac31d71fc4a8639ef0e0b0aea6f9bcdbf0ca10b))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-docs.yml ([73c3df3](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/73c3df34f0c2d09c78e0d13d99781d3df3a3399e))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-docs.yml from 0.1.1 to 0.2.1 ([24740e5](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/24740e526fc97b572b50ef4d9a0126b7b8950e80))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-fmt.yml ([f1a06bb](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/f1a06bb7bf067687f638e1a42228cdf16f44b3d4))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-fmt.yml from 0.1.1 to 0.2.1 ([e09ad2d](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/e09ad2d0452f48393c39092eb51bf5f6392d0458))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-validate.yml ([c7e12df](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/c7e12df75e7c57e2897b641fd0b47f44255821bf))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-validate.yml from 0.1.1 to 0.2.1 ([8f835e6](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/8f835e651207376bcf51f4d1a9a9bf804204f5b6))
+* remove duplicate License.md file ([#116](https://github.com/Coalfire-CF/terraform-aws-ec2/issues/116)) ([2dea659](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/2dea659be8fd42ce2699e9e1d82950c3f8f5749b))
+* remove obsolete update-readme-tree.sh script ([#118](https://github.com/Coalfire-CF/terraform-aws-ec2/issues/118)) ([b4de052](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/b4de052239e33b1312b76138fa85f97d81d1e48d))
+* update CODEOWNERS ([af0d96f](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/af0d96ffa79bcc1c6b7d72bf5871f76c15610e4f))
+* update CODEOWNERS ([f93c5a8](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/f93c5a880a03fed75bbbb489e717bfa71778c93f))
+* update org-release.yml to v0.2.1 ([#119](https://github.com/Coalfire-CF/terraform-aws-ec2/issues/119)) ([5342d3f](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/5342d3f08516f8cbf76a87a5ded1f8a11415ad7f))
+
 ## [2.2.4](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.3...v2.2.4) (2026-01-13)
 
 
