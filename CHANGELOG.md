@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.6](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.5...v2.2.6) (2026-01-28)
+
+
+### Bug Fixes
+
+* tf validate workflow ([19d4e86](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/19d4e86eaf72215e2b5b1a3d927965f54a9c90e5))
+* tf validate workflow ([9f17087](https://github.com/Coalfire-CF/terraform-aws-ec2/commit/9f17087f97aa13316370bfeaa7ecfe3acbd39bee))
+
 ## [2.2.5](https://github.com/Coalfire-CF/terraform-aws-ec2/compare/v2.2.4...v2.2.5) (2026-01-26)
 
 
