@@ -14,7 +14,7 @@ resource "aws_ebs_volume" "this" {
   outpost_arn          = local.additional_ebs_volumes[count.index][1].outpost_arn
   tags = merge(
     {
-      Name                        = var.instance_count == 1 ? var.name : "${var.name}${floor(count.index / max(length(var.ebs_volumes), 1)) + 1}",
+      Name                        = var.instance_count == 1 ? var.name : "${var.name}${(count.index / max(length(var.ebs_volumes), 1)) + 1}"
       AssociatedInstance          = local.additional_ebs_volumes[count.index][0].id
       ForceDetach                 = local.additional_ebs_volumes[count.index][1].force_detach
       SkipDestroy                 = local.additional_ebs_volumes[count.index][1].skip_destroy
@@ -22,6 +22,7 @@ resource "aws_ebs_volume" "this" {
       DeviceName                  = local.additional_ebs_volumes[count.index][1].device_name
     },
     local.additional_ebs_volumes[count.index][1].tags,
+    var.tags,
     var.global_tags,
     {
       backup_policy = var.backup_policy
