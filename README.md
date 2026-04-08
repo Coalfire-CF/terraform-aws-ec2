@@ -19,9 +19,9 @@ The following modules or resources should be created prior to deploying this mod
 ## Tree
 ```
 .
+|-- CHANGELOG.md
 |-- CONTRIBUTING.md
 |-- LICENSE
-|-- License.md
 |-- README.md
 |-- coalfire_logo.png
 |-- ebs.tf
@@ -35,7 +35,7 @@ The following modules or resources should be created prior to deploying this mod
 |   |-- main.tf
 |   |-- outputs.tf
 |   |-- providers.tf
-|   |-- required-providers.tf
+|   |-- required_providers.tf
 |   |-- userdata
 |   |   |-- ud-os-join-ad.sh
 |   |-- variables.tf
@@ -46,7 +46,6 @@ The following modules or resources should be created prior to deploying this mod
 |-- required_providers.tf
 |-- sg.tf
 |-- target_group_attachment.tf
-|-- update-readme-tree.sh
 |-- variables.tf
 ```
 ## Resource List
